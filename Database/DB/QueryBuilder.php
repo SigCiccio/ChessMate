@@ -8,8 +8,6 @@ require_once('Database/DB/Insert.php');
 require_once('Database/DB/Update.php');
 require_once('Database/DB/Delete.php');
 
-
-use DatabaseHelper;
 use Database\DB\Select;
 use Database\DB\Insert;
 use Database\DB\Update;

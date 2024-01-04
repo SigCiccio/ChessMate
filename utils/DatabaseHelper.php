@@ -1,7 +1,5 @@
 <?php
 
-namespace Database\DB;
-
 class DatabaseHelper {
 
     private $db;
