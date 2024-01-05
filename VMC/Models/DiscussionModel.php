@@ -1,6 +1,6 @@
 <?php
 
-namespace Models\Users;
+namespace vmc\Models;
 
 class UserModel
 {

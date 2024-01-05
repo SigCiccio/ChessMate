@@ -1,6 +1,6 @@
 <?php
 
-namespace Models\Users;
+namespace vmc\Models;
 
 class UserModel
 {
@@ -10,7 +10,7 @@ class UserModel
     private String $title;
     private String $text;
     private int $vote;
-    
+
 
     public function __construct(int $id, String $author, $publication_date, String $title, String $text, int $vote)  
     {
