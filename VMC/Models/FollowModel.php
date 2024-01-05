@@ -12,11 +12,6 @@ class FollowModel
     {
         $this->follower = $follower;
         $this->followed = $followed;
-        $this->replay_to = $replay_to;
-        $this->author = $author;
-        $this->publication_date = $publication_date;
-        $this->text = $text;
-        $this->vote = $vote;
     }
 
     public function toString()

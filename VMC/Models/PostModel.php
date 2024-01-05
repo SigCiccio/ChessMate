@@ -2,9 +2,14 @@
 
 namespace vmc\Models;
 
+require_once("vmc/Models/ImageModel.php");
+
+use vmc\Models\ImageModel;
+
 class UserModel
 {
     private int $id;
+    private ImageModel $image;
     private String $author;
     private $publication_date;
     private String $title;
@@ -20,6 +25,12 @@ class UserModel
         $this->title = $title;
         $this->text = $text;
         $this->vote = $vote;
+        $this->image = NULL;
+    }
+
+    public function setImage(ImageModel $image)
+    {
+        $this->image = $image;
     }
 
     public function toString()
