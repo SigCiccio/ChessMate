@@ -1,7 +1,15 @@
 <section class="authentication">
 
-    <form action="" method="post">
-
+    <form action="authentication.php" method="post">
+        <?php if(isset($_GET['error'])): ?>    
+            <div class="error">
+                <?php if( $_GET['error'] == 'mail'): ?>
+                    La mail specificata non appartiene a nessun utente
+                <?php elseif($_GET['error'] == 'password'): ?>
+                    Password non corretta
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
         <div class="login">
             <label for="mail">Email</label>    
             <input type="email" name="mail" id="mail">
@@ -26,8 +34,8 @@
             <label for="new-mail">Cognome</label>
             <input type="text" name="surname" id="surname">
 
-            <label for="birtday">Data di nascita</label>
-            <input type="date" name="birtday" id="birtday">
+            <label for="birthday">Data di nascita</label>
+            <input type="date" name="birthday" id="birthday">
 
             <label for="nationality">Nazionalità</label>
             <input type="text" name="nationality" id="nationality">

@@ -20,7 +20,7 @@
     ?>
 
     <!-- Rendere il titolo dinamico -->
-    <title>CM - <?php echo $templateParams['titolo'] ?></title>
+    <title>CM - <?php echo $templateParams['title']; ?></title>
 </head>
 <body>
     <header>

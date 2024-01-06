@@ -9,7 +9,12 @@ use vmc\Controllers\UserController;
 
 if(isUserLoggedIn())
 {
-
+    if(isset($_GET['my_profile']))
+    {
+        $templateParams['title'] = "Il Mio Profilo";
+        $templateParams['content'] = "vmc/Views/view-profile.php";
+        $templateParams['user'] = $_SESSION['user'];
+    }
 }
 else
 {
@@ -19,4 +24,4 @@ else
     $templateParams['content'] = "vmc/Views/log-sign.php";
 }
 
-require("base.php");
+require_once("base.php");

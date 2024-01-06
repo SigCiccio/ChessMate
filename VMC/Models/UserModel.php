@@ -10,27 +10,28 @@ class UserModel
 {
     private String $username;
     private String $mail;
+    private String $bio;
     private ImageModel $image;
     private String $name;
     private String $surname;
-    private $birtday;
+    private $birthday;
     private String $nationality;
     private int $elo;
     private int $followers;
     private int $follow;
 
-    public function __construct(String $username, String $mail, String $name, String $surname, $birtday, String $nationality, int $elo, int $followers, int $follow, bool $active)  
+    public function __construct(String $username, String $mail, String $bio, String $name, String $surname, $birthday, String $nationality, int $elo, int $followers, int $follow)  
     {
         $this->username = $username;
         $this->mail = $mail;
+        $this->bio = $bio;
         $this->name = $name;
         $this->surname = $surname;
-        $this->birtday = $birtday;
+        $this->birthday = $birthday;
         $this->nationality = $nationality;
         $this->elo = $elo;
         $this->followers = $followers;
         $this->follow = $follow;
-        $this->image = NULL;
     }
 
     public function setImage(ImageModel $image)
@@ -45,7 +46,7 @@ class UserModel
         "mail:\t" . $this->mail  . "\n" .
         "name:\t" . $this->name . "\n" .
         "surname:\t" . $this->surname . "\n" .
-        "birtday:\t" . $this->birtday . "\n" .
+        "birthday:\t" . $this->birthday . "\n" .
         "nationality:\t" . $this->nationality . "\n" .
         "elo:\t" . $this->elo . "\n" .
         "followers\t" . $this->followers . "\n" .
@@ -72,9 +73,9 @@ class UserModel
         return $this->surname;
     }
 
-    public function getBirtday()
+    public function getBirthday()
     {
-        return $this->birtday;
+        return $this->birthday;
     }
 
     public function getNationality()
@@ -95,5 +96,15 @@ class UserModel
     public function getFollow()
     {
         return $this->follow;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function getBio()
+    {
+        return $this->bio;
     }
 }

@@ -5,8 +5,12 @@ namespace vmc\Controllers;
 require_once("Database/DB/QueryBuilder.php");
 require_once("utils/DatabaseHelper.php");
 
+require_once("vmc/Models/ImageModel.php");
+
 use DatabaseHelper;
 use Database\DB\QueryBuilder;
+
+use vmc\Models\ImageModel;
 
 class ImageController
 {
@@ -15,6 +19,11 @@ class ImageController
     public function __construct(DatabaseHelper $dbh)  
     {
         $this->qb = new QueryBuilder($dbh);
+    }
+
+    public function makeModel(array $data)
+    {
+        return new ImageModel($data['id'], $data['url']);
     }
 
     public function insertImage($url)
@@ -72,5 +81,19 @@ class ImageController
             $em = "unknown error occurred!";
             header("Location: index.php?error=$em");
         }
+    }
+
+    public function selectImageById(int $id)
+    {
+        $res = $this->qb->select('*')
+            ->from('images i')
+            ->where('id', '=', $id, 'i')
+            ->commit();
+        
+        if(count($res) == 0)
+        {
+
+        }
+        return $this->makeModel($res[0]);
     }
 }
