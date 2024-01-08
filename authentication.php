@@ -36,6 +36,10 @@ if(!isUserLoggedIn())
                         'elo'           => $_POST['elo'],
                     ];
                     $uc->insertNewUser($data);
+
+                    $um = $uc->selectUserFromMail($_POST['new-mail']);
+                    logUser($um['value']);
+                    header("Location: index.php?my_profile");
                 }
                 else    
                     echo "error";

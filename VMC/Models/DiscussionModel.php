@@ -2,18 +2,18 @@
 
 namespace vmc\Models;
 
-class UserModel
+class DiscussionModel
 {
     private int $id;
     private int $post;
-    private int $replay_to;
+    private $replay_to;
     private String $author;
     private $pubblication_date;
     private String $text;
-    private int $vote;
+    private $sub_discussions;
     
 
-    public function __construct(int $id, int $post, int $replay_to, String $author, $publication_date, String $text, int $vote)  
+    public function __construct(int $id, int $post, $replay_to, String $author, $publication_date, String $text)  
     {
         $this->id = $id;
         $this->post = $post;
@@ -21,7 +21,7 @@ class UserModel
         $this->author = $author;
         $this->publication_date = $publication_date;
         $this->text = $text;
-        $this->vote = $vote;
+        $this->sub_discussions = NULL;
     }
 
     public function toString()
@@ -32,8 +32,22 @@ class UserModel
         "replay_to:\t" . $this->replay_to  . "\n" .
         "author:\t" . $this->author  . "\n" .
         "publication_date:\t" . $this->publication_date . "\n" .
-        "text:\t" . $this->text . "\n" .
-        "vote:\t" . $this->vote . "\n";
+        "text:\t" . $this->text . "\n";
+    }
+
+    public function addSubDiscussion(DiscussionModel $dm)
+    {
+        $this->sub_discussions[] = $dm;
+    }
+
+    public function hasSubdiscussion()
+    {
+        return ($this->sub_discussions != NULL);
+    }
+
+    public function getSubdiscussions()
+    {
+        return $this->sub_discussions;
     }
 
     public function getId()
@@ -64,10 +78,5 @@ class UserModel
     public function getText()
     {
         return $this->text;
-    }
-
-    public function getVote()
-    {
-        return $this->vote;
     }
 }

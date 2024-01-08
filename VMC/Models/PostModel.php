@@ -6,15 +6,16 @@ require_once("vmc/Models/ImageModel.php");
 
 use vmc\Models\ImageModel;
 
-class UserModel
+class PostModel
 {
     private int $id;
-    private ImageModel $image;
     private String $author;
     private $publication_date;
     private String $title;
     private String $text;
+    private $image;
     private int $vote;
+    private $discussions;
 
 
     public function __construct(int $id, String $author, $publication_date, String $title, String $text, int $vote)  
@@ -26,6 +27,17 @@ class UserModel
         $this->text = $text;
         $this->vote = $vote;
         $this->image = NULL;
+        $this->discussions = NULL;
+    }
+
+    public function hasImage()
+    {
+        return ($this->image != NULL);
+    }
+
+    public function hasDiscussion()
+    {
+        return ($this->discussions != NULL);
     }
 
     public function setImage(ImageModel $image)
@@ -72,5 +84,10 @@ class UserModel
     public function getVote()
     {
         return $this->vote;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 }

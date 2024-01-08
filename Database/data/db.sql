@@ -21,7 +21,7 @@ CREATE TABLE `chessmate`.`users` (
   	`mail` 			VARCHAR(200)	UNIQUE,
   	`username` 		VARCHAR(150) 	NOT NULL,
   	`password` 		VARCHAR(512) 	NOT NULL,
-  	`bio`	 		VARCHAR(512) 	DEFAULT NULL,
+  	`bio`	 		VARCHAR(512) 	DEFAULT "",
   	`image` 		INT			 	DEFAULT NULL,
   	`name` 			VARCHAR(45) 	NOT NULL,
   	`surname` 		VARCHAR(45) 	NOT NULL,
