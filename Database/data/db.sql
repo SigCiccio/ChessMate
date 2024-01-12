@@ -26,8 +26,6 @@ CREATE TABLE `chessmate`.`users` (
   	`name` 			VARCHAR(45) 	NOT NULL,
   	`surname` 		VARCHAR(45) 	NOT NULL,
   	`birthday` 		DATE		 	NOT NULL,
-  	`nationality`	VARCHAR(150)	DEFAULT NULL,
-  	`elo`			INT				DEFAULT NULL,
   	`followers`		INT				NOT NULL DEFAULT 0,
   	`follow`		INT				NOT NULL DEFAULT 0,
   	PRIMARY KEY (`username`),
@@ -43,38 +41,44 @@ CREATE TABLE `chessmate`.`posts` (
   	`id`	 			INT				NOT NULL AUTO_INCREMENT,
   	`author` 			VARCHAR(150) 	UNIQUE,
   	`publication_date` 	DATE		 	NOT NULL,
+	`time`				TIME			NOT NULL,
   	`title`			 	VARCHAR(512) 	NOT NULL,
-  	`text`			 	VARCHAR(512) 	NOT NULL,
   	`vote`			 	INT			 	DEFAULT NULL,
-  	`image` 			INT			 	DEFAULT NULL,
   	PRIMARY KEY (`id`),
   	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	FOREIGN KEY (`image`) REFERENCES `images`(`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 );
 
 -- -----------------------------------------------------
--- Table `chessmate`.`discussions`
+-- Table `chessmate`.`comments`
 -- -----------------------------------------------------
-CREATE TABLE `chessmate`.`discussions` (
+CREATE TABLE `chessmate`.`comments` (
 	`id`	 			INT				NOT NULL AUTO_INCREMENT,
-  	`post`	 			INT				NOT NULL,
-  	`replay_to`			INT				DEFAULT NULL,
   	`author`		 	VARCHAR(150) 	NOT NULL,
+  	`post`	 			INT				NOT NULL,
   	`publication_date` 	DATE		 	NOT NULL,
-  	`text`			 	VARCHAR(512) 	NOT NULL,
+	`pubblication_time`	TIME			NOT NULL,
   	`vote`			 	INT			 	DEFAULT NULL,
+	`post_type`			VARCHAR(1)		NOT NULL,
   	PRIMARY KEY (`id`),
   	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	FOREIGN KEY (`replay_to`) REFERENCES `discussions`(`id`)
+		ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Table `chessmate`.`comments`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`games` (
+	`id`	 			INT				NOT NULL AUTO_INCREMENT,
+  	`post`	 			INT				NOT NULL,
+  	`move`			 	VARCHAR(1024) 	NOT NULL,
+  	PRIMARY KEY (`id`),
+  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 );
