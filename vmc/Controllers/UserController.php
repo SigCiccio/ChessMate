@@ -36,9 +36,71 @@ class UserController
         return true;
     }
 
+    private function selectFollowersList($username)
+    {
+        $res = $this->qb->select('follower')
+            ->from('follows')
+            ->where('followed', '=', $username, 's')
+            ->commit();
+        
+        $list = [];
+
+        foreach($res as $r)
+        {
+            $list[] = $r['follower'];
+        }
+
+        return $list;
+    }
+
+    private function selectFollowList($username)
+    {
+        $res = $this->qb->select('followed')
+            ->from('follows')
+            ->where('follower', '=', $username, 's')
+            ->commit();
+        
+        $list = [];
+
+        foreach($res as $r)
+        {
+            $list[] = $r['followed'];
+        }
+
+        return $list;
+    }
+
+    private function updateFollowers(int $n, String $username)
+    {
+        $this->qb->update()
+            ->table('users')
+            ->set('followers', $n, 'i')
+            ->where('username', $username, 's')
+            ->commit();
+    }
+
+    private function updateFollow(int $n, String $username)
+    {
+        $this->qb->update()
+            ->table('users')
+            ->set('follow', $n, 'i')
+            ->where('username', $username, 's')
+            ->commit();
+    }
+
     private function makeModel(array $data)
     {
-        $um = new UserModel($data['username'], $data['mail'], $data['bio'], $data['name'], $data['surname'], $data['birthday'], $data['followers'], $data['follow']);
+        $followersList = $this->selectFollowersList($data['username']);
+
+        if(count($followersList) != $data['followers'])
+            $this->updateFollowers(count($followersList), $data['username']);
+        
+        $followList = $this->selectFollowList($data['username']);
+
+            if(count($followList) != $data['follow'])
+                $this->updateFollow(count($followersList), $data['username']);
+
+        $um = new UserModel($data['username'], $data['mail'], $data['bio'], $data['name'], $data['surname'], $data['birthday'], count($followersList), count($followList));
 
         if($data['image'] != NULL)
             $um->setImage($this->ic->selectImageById($data['image']));
@@ -109,13 +171,5 @@ class UserController
             ->value($data['birthday'], 's')
             ->commit();
         echo $res;
-    }
-    
-    public function getFollowers($user)
-    {
-        return $this->qb->select("followed as author")
-            ->from("follows")
-            ->where('follower', '=', $username, 's')
-            ->commit();
     }
 }

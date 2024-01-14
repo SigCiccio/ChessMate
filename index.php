@@ -30,6 +30,8 @@ if(isUserLoggedIn())
     else 
     {
         $pc = new PostController($dbh);
+        
+        $templateParams['posts'] = $pc->getMostRecentPost();
         $templateParams['title'] = "Home";
         $templateParams['content'] = "vmc/Views/view-posts.php";
     }
