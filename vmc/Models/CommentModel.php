@@ -2,25 +2,23 @@
 
 namespace vmc\Models;
 
-class PostModel
+class CommentModel
 {
     private int $id;
+    private int $post;
     private String $author;
     private $publication_date;
     private $publication_time;
-    private String $title;
-    private String $game;
-    private int $vote;    
+    private String $text;  
 
-    public function __construct(int $id, String $author, $publication_date, $publication_time, String $title, String $game, int $vote)  
+    public function __construct(int $id, String $author, int $post, $publication_date, $publication_time, String $text)  
     {
         $this->id = $id;
         $this->author = $author;
+        $this->post = $post;
         $this->publication_date = $publication_date;
         $this->publication_time = $publication_time;
-        $this->title = $title;
-        $this->game = $game;
-        $this->vote = $vote;
+        $this->text = $text;
     }
 
     public function getId()
@@ -33,9 +31,14 @@ class PostModel
         return $this->author;
     }
 
-    public function getTitle()
+    public function getPost()
     {
-        return $this->title;
+        return $this->post;
+    }
+
+    public function getText()
+    {
+        return $this->text;
     }
 
     public function getPublicationDate()
@@ -46,16 +49,6 @@ class PostModel
     public function getPublicationTime()
     {
         return $this->publication_time;
-    }
-
-    public function getVote()
-    {
-        return $this->vote;
-    }
-
-    public function getGame()
-    {
-        return $this->game;
     }
 
 }

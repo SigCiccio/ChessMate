@@ -14,13 +14,6 @@ class ImageModel
         $this->url = $url;
     }
 
-    public function toString()
-    {
-        return "" . 
-        "id:\t" . $this->id . "\n" . 
-        "url:\t" . $this->url  . "\n";
-    }
-
     public function getId()
     {
         return $this->id;

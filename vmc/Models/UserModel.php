@@ -17,6 +17,8 @@ class UserModel
     private $birthday;
     private int $followers;
     private int $follow;
+    private $followersList;
+    private $followList;
 
     public function __construct(String $username, String $mail, String $bio, String $name, String $surname, $birthday, int $followers, int $follow)  
     {
@@ -29,11 +31,43 @@ class UserModel
         $this->followers = $followers;
         $this->follow = $follow;
         $this->image = NULL;
+        $this->followersList = NULL;
+        $this->followList = NULL;
+    }
+
+    public function setFollowList(array $followList)
+    {
+        $this->followList = $followList;
+    }
+
+    public function setFollowersList(array $followersList)
+    {
+        $this->followersList = $followersList;
+    }
+
+    public function setFollowersNumber(int $n)
+    {
+        $this->followers = $n;
+    }
+
+    public function setFollowNumber($n)
+    {
+        $this->follow = $n;
     }
 
     public function setImage(ImageModel $image)
     {
         $this->image = $image;
+    }
+
+    public function getFollowersList()
+    {
+        return $this->followersList;
+    }
+
+    public function getFollowList()
+    {
+        return $this->followList;
     }
 
     public function getUsername()

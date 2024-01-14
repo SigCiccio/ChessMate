@@ -18,8 +18,8 @@ CREATE TABLE `chessmate`.`images` (
 -- Table `chessmate`.`users`
 -- -----------------------------------------------------
 CREATE TABLE `chessmate`.`users` (
-  	`mail` 			VARCHAR(200)	UNIQUE,
   	`username` 		VARCHAR(150) 	NOT NULL,
+  	`mail` 			VARCHAR(200)	UNIQUE,
   	`password` 		VARCHAR(512) 	NOT NULL,
   	`bio`	 		VARCHAR(512) 	DEFAULT "",
   	`image` 		INT			 	DEFAULT NULL,
@@ -30,55 +30,6 @@ CREATE TABLE `chessmate`.`users` (
   	`follow`		INT				NOT NULL DEFAULT 0,
   	PRIMARY KEY (`username`),
 	FOREIGN KEY (`image`) REFERENCES `images`(`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-);
-
--- -----------------------------------------------------
--- Table `chessmate`.`posts`
--- -----------------------------------------------------
-CREATE TABLE `chessmate`.`posts` (
-  	`id`	 			INT				NOT NULL AUTO_INCREMENT,
-  	`author` 			VARCHAR(150) 	UNIQUE,
-  	`publication_date` 	DATE		 	NOT NULL,
-	`time`				TIME			NOT NULL,
-  	`title`			 	VARCHAR(512) 	NOT NULL,
-  	`vote`			 	INT			 	DEFAULT NULL,
-  	PRIMARY KEY (`id`),
-  	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-);
-
--- -----------------------------------------------------
--- Table `chessmate`.`comments`
--- -----------------------------------------------------
-CREATE TABLE `chessmate`.`comments` (
-	`id`	 			INT				NOT NULL AUTO_INCREMENT,
-  	`author`		 	VARCHAR(150) 	NOT NULL,
-  	`post`	 			INT				NOT NULL,
-  	`publication_date` 	DATE		 	NOT NULL,
-	`pubblication_time`	TIME			NOT NULL,
-  	`vote`			 	INT			 	DEFAULT NULL,
-	`post_type`			VARCHAR(1)		NOT NULL,
-  	PRIMARY KEY (`id`),
-  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-);
-
--- -----------------------------------------------------
--- Table `chessmate`.`comments`
--- -----------------------------------------------------
-CREATE TABLE `chessmate`.`games` (
-	`id`	 			INT				NOT NULL AUTO_INCREMENT,
-  	`post`	 			INT				NOT NULL,
-  	`move`			 	VARCHAR(1024) 	NOT NULL,
-  	PRIMARY KEY (`id`),
-  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 );
@@ -97,4 +48,58 @@ CREATE TABLE `chessmate`.`follows` (
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 );
+
+-- -----------------------------------------------------
+-- Table `chessmate`.`posts`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`posts` (
+  	`id`	 			INT				NOT NULL AUTO_INCREMENT,
+  	`author` 			VARCHAR(150) 	NOT NULL,
+  	`publication_date` 	DATE		 	NOT NULL,
+	`publication_time`	TIME			NOT NULL,
+  	`title`			 	VARCHAR(512) 	NOT NULL,
+	`game`				VARCHAR(1024) 	NOT NULL,
+  	`vote`			 	INT			 	DEFAULT 0,
+  	PRIMARY KEY (`id`),
+  	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Table `chessmate`.`votes`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`votes` (
+  	`post`	 	INT	NOT NULL,
+  	`voter`		VARCHAR(150) 	NOT NULL,
+	`vote`		INT(1)			NOT NULL,
+  	PRIMARY KEY (`post`, `voter`),
+  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`voter`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Table `chessmate`.`comments`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`comments` (
+	`id`	 			INT				NOT NULL AUTO_INCREMENT,
+  	`post`	 			INT				NOT NULL,
+  	`author`		 	VARCHAR(150) 	NOT NULL,
+  	`publication_date` 	DATE		 	NOT NULL,
+	`pubblication_time`	TIME			NOT NULL,
+	`text`				VARCHAR(1024)	NOT NULL,
+  	PRIMARY KEY (`id`),
+  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+
 
