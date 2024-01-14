@@ -1,5 +1,5 @@
 $( document ).ready(function() {
- 
+
     // Pieces
     const king = '<div class="piece" piece="king"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 0c17.7 0 32 14.3 32 32V48h16c17.7 0 32 14.3 32 32s-14.3 32-32 32H256v48H408c22.1 0 40 17.9 40 40c0 5.3-1 10.5-3.1 15.4L368 400H80L3.1 215.4C1 210.5 0 205.3 0 200c0-22.1 17.9-40 40-40H192V112H176c-17.7 0-32-14.3-32-32s14.3-32 32-32h16V32c0-17.7 14.3-32 32-32zM38.6 473.4L80 432H368l41.4 41.4c4.2 4.2 6.6 10 6.6 16c0 12.5-10.1 22.6-22.6 22.6H54.6C42.1 512 32 501.9 32 489.4c0-6 2.4-11.8 6.6-16z"/></svg></div>'
     const queen = '<div class="piece" piece="queen"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 0a56 56 0 1 1 0 112A56 56 0 1 1 256 0zM134.1 143.8c3.3-13 15-23.8 30.2-23.8c12.3 0 22.6 7.2 27.7 17c12 23.2 36.2 39 64 39s52-15.8 64-39c5.1-9.8 15.4-17 27.7-17c15.3 0 27 10.8 30.2 23.8c7 27.8 32.2 48.3 62.1 48.3c10.8 0 21-2.7 29.8-7.4c8.4-4.4 18.9-4.5 27.6 .9c13 8 17.1 25 9.2 38L399.7 400H384 343.6 168.4 128 112.3L5.4 223.6c-7.9-13-3.8-30 9.2-38c8.7-5.3 19.2-5.3 27.6-.9c8.9 4.7 19 7.4 29.8 7.4c29.9 0 55.1-20.5 62.1-48.3zM256 224l0 0 0 0h0zM112 432H400l41.4 41.4c4.2 4.2 6.6 10 6.6 16c0 12.5-10.1 22.6-22.6 22.6H86.6C74.1 512 64 501.9 64 489.4c0-6 2.4-11.8 6.6-16L112 432z"/></svg></div>'
@@ -11,9 +11,7 @@ $( document ).ready(function() {
     // Board setup
     const squareNumber = 64
 
-    const gameboard = $('#gameboard')
-
-    function createBoard(){
+    function createBoard(board){
         let i = 0;
         for(i = 0; i < squareNumber; i++){
             const square = $(document.createElement('div'))
@@ -26,7 +24,7 @@ $( document ).ready(function() {
             else 
                 square.addClass(i % 2 === 0 ? 'dark' : 'light')
         
-            gameboard.append(square)   
+            board.append(square)   
         }
     }
 
@@ -37,7 +35,7 @@ $( document ).ready(function() {
             return false
     }
 
-    function fillBoard(position){
+    function fillBoard(position, index){
 
         let count = 0
         for(i = 0; i < position.length; i++){
@@ -52,62 +50,62 @@ $( document ).ready(function() {
                     switch (position.charAt(i)){
 
                         case 'k':
-                            $(`[square-id=${count}]`).append(king).children().addClass('black-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(king).children().addClass('black-piece');
                             count++;
                             break;
 
                         case 'K':
-                            $(`[square-id=${count}]`).append(king).children().addClass('white-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(king).children().addClass('white-piece');
                             count++;
                             break;
 
                         case 'q':
-                            $(`[square-id=${count}]`).append(queen).children().addClass('black-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(queen).children().addClass('black-piece');
                             count++;
                             break;
 
                         case 'Q':
-                            $(`[square-id=${count}]`).append(queen).children().addClass('white-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(queen).children().addClass('white-piece');
                             count++;
                             break;
                         
                         case 'b':
-                            $(`[square-id=${count}]`).append(bishop).children().addClass('black-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(bishop).children().addClass('black-piece');
                             count++;
                             break;
 
                         case 'B':
-                            $(`[square-id=${count}]`).append(bishop).children().addClass('white-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(bishop).children().addClass('white-piece');
                             count++;
                             break;
         
                         case 'n':
-                            $(`[square-id=${count}]`).append(knight).children().addClass('black-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(knight).children().addClass('black-piece');
                             count++;
                             break;
 
                         case 'N':
-                            $(`[square-id=${count}]`).append(knight).children().addClass('white-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(knight).children().addClass('white-piece');
                             count++;
                             break;
         
                         case 'r':
-                            $(`[square-id=${count}]`).append(rook).children().addClass('black-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(rook).children().addClass('black-piece');
                             count++;
                             break;
 
                         case 'R':
-                            $(`[square-id=${count}]`).append(rook).children().addClass('white-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(rook).children().addClass('white-piece');
                             count++;
                             break;
         
                         case 'p':
-                            $(`[square-id=${count}]`).append(pawn).children().addClass('black-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(pawn).children().addClass('black-piece');
                             count++;
                             break;
 
                         case 'P':
-                            $(`[square-id=${count}]`).append(pawn).children().addClass('white-piece');
+                            $(`[game=${index}] [square-id=${count}]`).append(pawn).children().addClass('white-piece');
                             count++;
                             break;
                         
@@ -121,62 +119,18 @@ $( document ).ready(function() {
         }
     }
 
-    function clearBoard()
-    {
-        gameboard.empty();
-    }
 
-    function findLastMove()
-    {
-        let move = 1;
-        isntLast = true;
-        for(move = 1; isntLast; move++)
-        {
-            if($(`[pos=${move}]`).length > 0){
-                isntLast = true
-            }
-            else
-            {
-                return move-1;
-            }
-        }
-    }
-
-    createBoard()
-
-    const pos = $("[pos=0]").attr("board");
-    fillBoard(pos)
-
-    $("#next").click(function(e){
-        if(Number($(this).attr('trace')) > findLastMove()){
-            console.log('cant go')
-        }
-        else {
-            clearBoard()
-            createBoard()
-            e.preventDefault();
-            const newPos = $(`[pos=${$(this).attr('trace')}]`).attr("board");
-            fillBoard(newPos)
-            $(this).attr('trace', Number($(this).attr('trace')) + 1);
-            $('#prev').attr('trace', Number($(this).attr('trace')) - 2);
-        }
+    $('.gameboard').each(function(index){
         
-    }); 
+        $(this).attr('game', index);
 
-    $("#prev").click(function(e){
-        if(Number($(this).attr('trace')) < 0){
-            console.log('cant go')
-        }
-        else{
-            clearBoard()
-            createBoard()
-            e.preventDefault();
-            const newPos = $(`[pos=${$(this).attr('trace')}]`).attr("board");
-            fillBoard(newPos)
-            $(this).attr('trace', Number($(this).attr('trace')) - 1);
-            $('#next').attr('trace', Number($(this).attr('trace')) + 2);
-        }
-    }); 
+        createBoard($(this));
+
+        const position = $(this).attr('position');
+
+        fillBoard(position, index);
+
+    });
 
 
-});
+})

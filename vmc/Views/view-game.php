@@ -14,8 +14,9 @@
             require_once('GameViewer/Game.php');
             use GameViewer\Game;
             $g = new Game();
-            $g->readMove($templateParams['post']->getGame());
+            $g->readMove($templateParams['post']->getGame()); 
         ?>
     </div>
 
 </section>
+

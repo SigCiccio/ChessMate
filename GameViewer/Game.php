@@ -689,5 +689,31 @@ class Game
         echo '</ul></li>';
 
     }
+
+    public function getFinalPosition($game)
+    {
+        $player = 'w';
+
+        $gameState = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+
+        $board = $this->explodeBoard($gameState);
+
+        $move = explode(' ', $game);
+
+        foreach($move as $m)
+        {
+            if($m[1] == '.' || (isset($m[2]) && $m[2] == '.'))
+            {
+                $player = 'w';
+            }
+            else 
+            {
+                $board = $this->modifyBoard($player, $m, $board);
+                $player = 'b';
+            }
+        }
+
+        return rtrim($this->reassembleBoard($board), '/');
+    }
     
 }

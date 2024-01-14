@@ -32,6 +32,8 @@ if(isUserLoggedIn())
         $pc = new PostController($dbh);
         
         $templateParams['posts'] = $pc->getMostRecentPost();
+        $templateParams['script'] = '<script src="js/post-preview.js"></script>';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
         $templateParams['title'] = "Home";
         $templateParams['content'] = "vmc/Views/view-posts.php";
     }

@@ -63,7 +63,7 @@ class PostController
         return $this->makeModel($res[0]);
     }
 
-    public function getMostRecentPost(/* $followerList */)
+    public function getMostRecentPost()
     {
         $res = $this->qb->select('*')
             ->from('posts p')

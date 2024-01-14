@@ -6,6 +6,14 @@
     flex-wrap: wrap;
 }
 
+.gameboard 
+{
+    width: 320px;
+    height: 320px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .square 
 {
     height: 40px;
