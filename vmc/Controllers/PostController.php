@@ -27,7 +27,8 @@ class PostController
             ->from('votes v')
             ->where('v.post', '=', $id, 'i')
             ->commit();
-        return count($res);
+
+        return $res[0]['n'];
     }
 
     private function updateVote(int $n, int $id)
@@ -67,12 +68,31 @@ class PostController
     {
         $res = $this->qb->select('*')
             ->from('posts p')
-            ->orderBy('p.publication_date')
+            ->orderBy('p.publication_date DESC')
             ->commit();
         
         if(count($res) == 0)
         {
             return -1;
+        }
+
+        foreach($res as $r)
+            $m[] = $this->makeModel($r);
+
+        return $m;
+    }
+
+    public function selectPostsByAuthor(String $author)
+    {
+        $res = $this->qb->select('*')
+            ->from('posts p')
+            ->where('author', '=', $author, 's')
+            ->orderBy('p.publication_date DESC')
+            ->commit();
+        
+        if(count($res) == 0)
+        {
+            return [];
         }
 
         foreach($res as $r)

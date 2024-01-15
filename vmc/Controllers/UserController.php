@@ -135,15 +135,9 @@ class UserController
         ->commit();
 
         if(count($res) == 0)
-            return [
-                'res' => -1,
-                'value' => NULL,
-            ];
+            return [];
 
-        return [
-            'res' => 0,
-            'value' => $this->makeModel($res[0]),
-        ];
+        return $this->makeModel($res[0]);
     }
 
     public function checkPassword(String $username, $password)
@@ -171,5 +165,24 @@ class UserController
             ->value($data['birthday'], 's')
             ->commit();
         echo $res;
+    }
+
+    public function updateUser(array $data, String $user)
+    {
+        $query = $this->qb->update()
+            ->table('users');
+        
+        foreach($data as $d)
+        {
+            $query->set($d[0], $d[1], $d[2]);
+        }
+
+        $res = $query
+            ->where('username', $user, 's')    
+            ->commit();
+        return $res; 
+
+        
+
     }
 }

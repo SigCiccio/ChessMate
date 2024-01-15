@@ -13,9 +13,15 @@ if(isUserLoggedIn())
 {
     if(isset($_GET['my_profile']))
     {
+        $pc = new PostController($dbh);
+
+        $templateParams['user'] = $_SESSION['user'];
+        $templateParams['posts'] = $pc->selectPostsByAuthor($templateParams['user']->getUsername());
+
         $templateParams['title'] = "Il Mio Profilo";
         $templateParams['content'] = "vmc/Views/view-profile.php";
-        $templateParams['user'] = $_SESSION['user'];
+        $templateParams['script'] = '<script src="js/post-preview.js"></script>';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
     }
     else if(isset($_GET['view-post-game']))
     {
@@ -26,6 +32,25 @@ if(isUserLoggedIn())
         $templateParams['script'] = '<script src="js/chessboard.js"></script>';
         $templateParams['post'] = $pc->selectPostById($_GET['view-post-game']);
         $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
+    }
+    else if(isset($_GET['view-profile']))
+    {
+        $uc = new UserController($dbh);
+        $pc = new PostController($dbh);
+
+        $templateParams['user'] = $uc->selectUserFromUsername($_GET['view-profile']);
+        $templateParams['posts'] = $pc->selectPostsByAuthor($templateParams['user']->getUsername());
+
+        $templateParams['title'] = $templateParams['user']->getUsername();
+        $templateParams['content'] = "vmc/Views/view-profile.php";
+        $templateParams['script'] = '<script src="js/post-preview.js"></script>';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
+    }
+    else if(isset($_GET['modify-profile']))
+    {
+        $templateParams['title'] = 'Modifica Profilo';
+        
+        $templateParams['content'] = "vmc/Views/modify-profile.php";
     }
     else 
     {

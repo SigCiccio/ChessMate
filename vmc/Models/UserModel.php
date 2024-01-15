@@ -35,6 +35,11 @@ class UserModel
         $this->followList = NULL;
     }
 
+    public function hasImage()
+    {
+        return $this->image != NULL;
+    }
+
     public function setFollowList(array $followList)
     {
         $this->followList = $followList;
@@ -58,6 +63,36 @@ class UserModel
     public function setImage(ImageModel $image)
     {
         $this->image = $image;
+    }
+
+    public function setUsername(String $username)
+    {
+        $this->username = $username;
+    }
+
+    public function setMail(String $mail)
+    {
+        $this->mail = $mail;
+    }
+
+    public function setBio(String $bio)
+    {
+        $this->bio = $bio;
+    }
+
+    public function setName(String $name)
+    {
+        $this->name = $name;
+    }
+
+    public function setSurname(String $surname)
+    {
+        $this->surname = $surname;
+    }
+
+    public function setBirtDay($birthday)
+    {
+        $this->birthday = $birthday;
     }
 
     public function getFollowersList()
