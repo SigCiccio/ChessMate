@@ -1,5 +1,11 @@
 <section class="game">
 
+    <?php if($templateParams['post']->getAuthor() == $_SESSION['user']->getUsername()): ?>
+        <div>
+            <a href="delete.php?post=<?php echo $templateParams['post']->getId() ?>">Elimina partita</a>
+        </div>
+    <?php endif ?>
+
     <div id="gameboard">
 
     </div>

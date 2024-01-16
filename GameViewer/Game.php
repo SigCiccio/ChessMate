@@ -569,6 +569,12 @@ class Game
             {
                 return $this->castleK($player, $board);
             } 
+            else if(ctype_lower($move[0]))
+            {
+                $column = $this->letterToNumber($move[0]);
+                $row = $this->colomnToIndex($move[1]); 
+                return $this->pawnMove($player, $column, $row, $board); 
+            }
             else 
             {
                 $piece = $move[0];

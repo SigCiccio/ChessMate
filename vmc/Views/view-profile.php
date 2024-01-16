@@ -22,6 +22,7 @@
         </div>
         <?php if(isset($_GET['my_profile'])): ?>
             <a href="index.php?modify-profile">Modifica</a>
+            <a href="index.php?upload-game">Carica Partita</a>
         <?php endif ?>
         </section>
     

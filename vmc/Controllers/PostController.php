@@ -100,4 +100,24 @@ class PostController
 
         return $m;
     }
+
+    public function uploadPost(array $data)
+    {
+        return $this->qb->insert('author, publication_date, publication_time, title, game')
+            ->into('posts')
+            ->value($data['author'], 's')
+            ->value($data['publication_date'], 's')
+            ->value($data['publication_time'], 's')
+            ->value($data['title'], 's')
+            ->value($data['game'], 's')
+            ->commit();
+    }
+
+    public function deletePost(int $id)
+    {
+        return $this->qb->delete()
+            ->table('posts')
+            ->where('id', $id, 'i')
+            ->commit();
+    }
 }

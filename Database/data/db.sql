@@ -31,7 +31,7 @@ CREATE TABLE `chessmate`.`users` (
   	PRIMARY KEY (`username`),
 	FOREIGN KEY (`image`) REFERENCES `images`(`id`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE
+		ON DELETE SET NULL
 );
 
 -- -----------------------------------------------------

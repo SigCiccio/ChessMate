@@ -40,20 +40,21 @@ if(isUserLoggedIn())
         $user->setBio($_POST['bio']);
     }
     
-    if(true){
+    if(isset($_FILES['image'])){
         $ic = new ImageController($dbh);
-        $ic->newImage($_FILES['image']);
+        $user->setImage($ic->newImage($_FILES['image']));
+        $data[] = ['image', $user->getImage()->getId(), 'i'];
     } 
 
 
-    /* if(count($data) == 0)
+    if(count($data) == 0)
         header("Location: index.php?my_profile&no-change");
     else
     {
         $uc = new UserController($dbh);
         $uc->updateUser($data, $user->getUsername());
         header("Location: index.php?my_profile&changes");
-    }   */
+    }  
 }
 else 
     header("Location: index.php");

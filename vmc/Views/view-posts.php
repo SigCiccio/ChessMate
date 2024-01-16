@@ -16,8 +16,14 @@
                 
             </div>
             
+            <?php if($post->getAuthor() == $_SESSION['user']->getUsername()): ?>
+                <div>
+                    <a href="delete.php?post=<?php echo $post->getId() ?>">Elimina partita</a>
+                </div>
+            <?php endif ?>
+
             <div class="option">
-                <a href="">Commenti</a>
+                <a href="index.php?view-post-comment=<?php echo $post->getId() ?>">Commenti</a>
                 <a href="index.php?view-post-game=<?php echo $post->getId() ?>">Visualizza</a>
                 <?php echo $post->getVote() ?>
                 <button>Upvote</button>

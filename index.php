@@ -5,9 +5,11 @@ require_once("utils/bootstrap.php");
 
 require_once("vmc/Controllers/UserController.php"); 
 require_once("vmc/Controllers/PostController.php");
+require_once("vmc/Controllers/CommentController.php");
 
 use vmc\Controllers\UserController; 
 use vmc\Controllers\PostController;
+use vmc\Controllers\CommentController;
 
 if(isUserLoggedIn())
 {
@@ -51,6 +53,20 @@ if(isUserLoggedIn())
         $templateParams['title'] = 'Modifica Profilo';
         
         $templateParams['content'] = "vmc/Views/modify-profile.php";
+    }
+    else if(isset($_GET['view-post-comment']))
+    {
+        $cc = new CommentController($dbh);
+
+        $templateParams['comments'] = $cc->selectCommentsOfPost($_GET['view-post-comment']);
+
+        $templateParams['title'] = 'Commenti';
+        $templateParams['content'] = "vmc/Views/view-comment.php";
+    }
+    else if(isset($_GET['upload-game']))
+    {
+        $templateParams['title'] = "Nuovo post";
+        $templateParams['content'] = "vmc/Views/upload-post.php";
     }
     else 
     {
