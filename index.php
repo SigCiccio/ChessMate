@@ -7,9 +7,13 @@ require_once("vmc/Controllers/UserController.php");
 require_once("vmc/Controllers/PostController.php");
 require_once("vmc/Controllers/CommentController.php");
 
+require_once("vmc/Models/UserModel.php"); 
+
 use vmc\Controllers\UserController; 
 use vmc\Controllers\PostController;
 use vmc\Controllers\CommentController;
+
+use vmc\Models\UserModel; 
 
 if(isUserLoggedIn())
 {
@@ -74,6 +78,24 @@ if(isUserLoggedIn())
         $templateParams['title'] = "Nuovo post";
         $templateParams['script'] = '<script src="js/search.js"></script>';
         $templateParams['content'] = "vmc/Views/search-user.php";
+    }
+    else if(isset($_GET['follow']))
+    {
+        $uc = new UserController($dbh);
+        
+        $templateParams['user'] = $uc->selectUserFromUsername($_GET['follow']);
+        $templateParams['users-list'] = $templateParams['user']->getFollowList();
+        $templateParams['title'] = "Follow";
+        $templateParams['content'] = "vmc/Views/followers-follow.php";
+    }
+    else if(isset($_GET['followers']))
+    {
+        $uc = new UserController($dbh);
+        
+        $templateParams['user'] = $uc->selectUserFromUsername($_GET['followers']);
+        $templateParams['users-list'] = $templateParams['user']->getFollowersList();
+        $templateParams['title'] = "Followers";
+        $templateParams['content'] = "vmc/Views/followers-follow.php";
     }
     else 
     {

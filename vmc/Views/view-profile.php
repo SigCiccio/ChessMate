@@ -17,8 +17,9 @@
                     <li user-attr='username'><?php echo $user->getUsername() ?></li>
                     <li><?php echo $user->getName() . " " . $user->getSurname() ?></li>
                     <li><?php echo $user->getBio() ?></li>
-                    <li><?php echo "followers <span user-attr='followers'>" . $user->getFollowers() .  "</span> follow <span user-attr='follow'>" . $user->getFollow() . '</span>' ?></li>
+                    <li><?php echo "<a href='index.php?followers=" . $user->getUsername() . "'>followers <span user-attr='followers'>" . $user->getFollowers() .  "</span></a>  <a href='index.php?follow=" . $user->getUsername() . "'>follow <span user-attr='follow'>" . $user->getFollow() . '</span></a>' ?></li>
                 </ul>
+                <a href="index.php?follow=<?php echo $user->getUsername() ?>"></a>
         </div>
         <?php if(isset($_GET['my_profile'])): ?>
             <a href="index.php?modify-profile">Modifica</a>
