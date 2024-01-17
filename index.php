@@ -61,12 +61,19 @@ if(isUserLoggedIn())
         $templateParams['comments'] = $cc->selectCommentsOfPost($_GET['view-post-comment']);
 
         $templateParams['title'] = 'Commenti';
+        $templateParams['script'] = '<script src="js/comment.js"></script>';
         $templateParams['content'] = "vmc/Views/view-comment.php";
     }
     else if(isset($_GET['upload-game']))
     {
         $templateParams['title'] = "Nuovo post";
         $templateParams['content'] = "vmc/Views/upload-post.php";
+    }
+    else if(isset($_GET['search-user']))
+    {
+        $templateParams['title'] = "Nuovo post";
+        $templateParams['script'] = '<script src="js/search.js"></script>';
+        $templateParams['content'] = "vmc/Views/search-user.php";
     }
     else 
     {

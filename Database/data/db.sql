@@ -72,7 +72,6 @@ CREATE TABLE `chessmate`.`posts` (
 CREATE TABLE `chessmate`.`votes` (
   	`post`	 	INT	NOT NULL,
   	`voter`		VARCHAR(150) 	NOT NULL,
-	`vote`		INT(1)			NOT NULL,
   	PRIMARY KEY (`post`, `voter`),
   	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
 		ON UPDATE CASCADE
@@ -90,7 +89,7 @@ CREATE TABLE `chessmate`.`comments` (
   	`post`	 			INT				NOT NULL,
   	`author`		 	VARCHAR(150) 	NOT NULL,
   	`publication_date` 	DATE		 	NOT NULL,
-	`pubblication_time`	TIME			NOT NULL,
+	`publication_time`	TIME			NOT NULL,
 	`text`				VARCHAR(1024)	NOT NULL,
   	PRIMARY KEY (`id`),
   	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
@@ -102,4 +101,29 @@ CREATE TABLE `chessmate`.`comments` (
 );
 
 
-
+-- -----------------------------------------------------
+-- Table `chessmate`.`notifications`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`notifications` (
+	`id`	 			INT				NOT NULL AUTO_INCREMENT,
+  	`user`	 			VARCHAR(150) 	NOT NULL,
+  	`sender`		 	VARCHAR(150) 	NOT NULL,
+  	`date` 				DATE		 	NOT NULL,
+	`time`				TIME			NOT NULL,
+	`post`				INT 			DEFAULT NULL,
+	`comment`			INT 			DEFAULT NULL,
+	`viewed`			INT				DEFAULT 0,
+  	PRIMARY KEY (`id`),
+	FOREIGN KEY (`user`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+  	FOREIGN KEY (`sender`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`comment`) REFERENCES `comments`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);

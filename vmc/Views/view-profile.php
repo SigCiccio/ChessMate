@@ -9,7 +9,7 @@
             <?php if($user->hasImage()): ?>
                 <img width="300px" src="imgs/<?php echo $user->getImage()->getUrl() ?>" alt="Immagine profilo di <?php echo $user->getUsername() ?>">
             <?php else: ?>
-                <img src="imgs/default.png" alt="Immagine di default. L'utente  <?php echo $user->getUsername() ?> non ha caricato un'immagine profilo">
+                <img width="300px" src="imgs/default.png" alt="Immagine di default. L'utente  <?php echo $user->getUsername() ?> non ha caricato un'immagine profilo">
             <?php endif ?>
         </div>
         <div class="user-data">

@@ -185,4 +185,18 @@ class UserController
         
 
     }
+
+    public function searchUsers(String $username)
+    {
+        $res = $this->qb->select('u.username, i.url')
+        ->from('users u')
+        ->join('images i', 'i.id', 'u.image')
+        ->where('username', 'LIKE', '%' . $username . '%', 's')
+        ->commit();
+
+        if(count($res) == 0)
+            return [];
+        
+        return $res;
+    }
 }

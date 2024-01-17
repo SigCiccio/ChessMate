@@ -45,4 +45,32 @@ class CommentController
 
         return $cm;
     }
+
+    public function selectCommentById($id)
+    {
+        $res = $this->qb->select('*')
+            ->from('comments')
+            ->where('id', '=', $id, 'i')
+            ->commit();
+
+        if(count($res) == 0 || count($res) > 1)
+        {
+            return [];
+        }
+
+        return $res[0];
+        
+    }
+
+    public function insertComment($post, $author, $publication_date, $publication_time, $text)
+    {
+        return $this->qb->insert('post, author, publication_date, publication_time, text')
+            ->into('comments')
+            ->value($post, 'i')
+            ->value($author, 's')
+            ->value($publication_date, 's')
+            ->value($publication_time, 's')
+            ->value($text, 's')
+            ->commit();
+    }
 }
