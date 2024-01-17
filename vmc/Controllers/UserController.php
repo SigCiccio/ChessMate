@@ -102,6 +102,9 @@ class UserController
 
         $um = new UserModel($data['username'], $data['mail'], $data['bio'], $data['name'], $data['surname'], $data['birthday'], count($followersList), count($followList));
 
+        $um->setFollowList($followList);
+        $um->setFollowersList($followersList);
+
         if($data['image'] != NULL)
             $um->setImage($this->ic->selectImageById($data['image']));
         
@@ -198,5 +201,23 @@ class UserController
             return [];
         
         return $res;
+    }
+
+    public function unfollow($follower, $followed)
+    {
+        return $this->qb->delete()
+            ->table('follows')
+            ->where('follower', $follower, 's')
+            ->andWhere('followed', $followed, 's')
+            ->commit();
+    }
+
+    public function follow($follower, $followed)
+    {
+        return $this->qb->insert('follower, followed')
+            ->into('follows')
+            ->value($follower, 's')
+            ->value($followed, 's')
+            ->commit();
     }
 }

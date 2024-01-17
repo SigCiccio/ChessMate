@@ -35,6 +35,21 @@ class UserModel
         $this->followList = NULL;
     }
 
+    public function removeToFollow($username)
+    {
+        $pos = array_search($username, $this->followList);
+
+        if($pos != false)
+        {
+            $this->followList[$pos] = NULL;
+        }
+    }
+
+    public function addToFollow($username)
+    {
+        $this->followList[] = $username;
+    }
+
     public function hasImage()
     {
         return $this->image != NULL;

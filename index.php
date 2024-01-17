@@ -45,7 +45,7 @@ if(isUserLoggedIn())
 
         $templateParams['title'] = $templateParams['user']->getUsername();
         $templateParams['content'] = "vmc/Views/view-profile.php";
-        $templateParams['script'] = '<script src="js/post-preview.js"></script>';
+        $templateParams['script'] = '<script src="js/post-preview.js"></script><script src="js/follow-unfollow.js"></script>';
         $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
     }
     else if(isset($_GET['modify-profile']))

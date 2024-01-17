@@ -14,15 +14,23 @@
         </div>
         <div class="user-data">
                 <ul>
-                    <li><?php echo $user->getUsername() ?></li>
+                    <li user-attr='username'><?php echo $user->getUsername() ?></li>
                     <li><?php echo $user->getName() . " " . $user->getSurname() ?></li>
                     <li><?php echo $user->getBio() ?></li>
-                    <li><?php echo "followers " . $user->getFollowers() .  " follow " . $user->getFollow() ?></li>
+                    <li><?php echo "followers <span user-attr='followers'>" . $user->getFollowers() .  "</span> follow <span user-attr='follow'>" . $user->getFollow() . '</span>' ?></li>
                 </ul>
         </div>
         <?php if(isset($_GET['my_profile'])): ?>
             <a href="index.php?modify-profile">Modifica</a>
             <a href="index.php?upload-game">Carica Partita</a>
+        <?php else: ?>
+            <?php if(in_array($user->getUsername(),$_SESSION['user']->getFollowList())): ?>
+                <button id="unfollow">Non seguire più</button>
+                <button class='hide' id="follow">Segui</button>
+            <?php else: ?>
+                <button id="follow">Segui</button>
+                <button class='hide' id="unfollow">Non seguire più</button>
+            <?php endif ?>
         <?php endif ?>
         </section>
     
