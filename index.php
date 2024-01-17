@@ -20,13 +20,23 @@ if(isUserLoggedIn())
     if(isset($_GET['my_profile']))
     {
         $pc = new PostController($dbh);
+        $uc = new UserController($dbh);
 
         $templateParams['user'] = $_SESSION['user'];
         $templateParams['posts'] = $pc->selectPostsByAuthor($templateParams['user']->getUsername());
 
+        $templateParams['upvote'] = [];
+        foreach($templateParams['posts'] as $p)
+        {
+            $templateParams['upvote'][] = [
+                'post' =>  $p->getId() ,
+                'upvote' => $uc->checkIfUserVote($p->getId())
+            ];
+        }
+
         $templateParams['title'] = "Il Mio Profilo";
         $templateParams['content'] = "vmc/Views/view-profile.php";
-        $templateParams['script'] = '<script src="js/post-preview.js"></script>';
+        $templateParams['script'] = '<script src="js/post-preview.js"></script><script src="js/vote.js"></script>';
         $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
     }
     else if(isset($_GET['view-post-game']))
@@ -47,9 +57,18 @@ if(isUserLoggedIn())
         $templateParams['user'] = $uc->selectUserFromUsername($_GET['view-profile']);
         $templateParams['posts'] = $pc->selectPostsByAuthor($templateParams['user']->getUsername());
 
+        $templateParams['upvote'] = [];
+        foreach($templateParams['posts'] as $p)
+        {
+            $templateParams['upvote'][] = [
+                'post' =>  $p->getId() ,
+                'upvote' => $uc->checkIfUserVote($p->getId())
+            ];
+        }
+
         $templateParams['title'] = $templateParams['user']->getUsername();
         $templateParams['content'] = "vmc/Views/view-profile.php";
-        $templateParams['script'] = '<script src="js/post-preview.js"></script><script src="js/follow-unfollow.js"></script>';
+        $templateParams['script'] = '<script src="js/post-preview.js"></script><script src="js/follow-unfollow.js"></script><script src="js/vote.js"></script>';
         $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
     }
     else if(isset($_GET['modify-profile']))
@@ -99,10 +118,19 @@ if(isUserLoggedIn())
     }
     else 
     {
+        $uc = new UserController($dbh);
         $pc = new PostController($dbh);
         
         $templateParams['posts'] = $pc->getMostRecentPost();
-        $templateParams['script'] = '<script src="js/post-preview.js"></script>';
+        $templateParams['upvote'] = [];
+        foreach($templateParams['posts'] as $p)
+        {
+            $templateParams['upvote'][] = [
+                'post' =>  $p->getId() ,
+                'upvote' => $uc->checkIfUserVote($p->getId())
+            ];
+        }
+        $templateParams['script'] = '<script src="js/vote.js"></script><script src="js/post-preview.js"></script>';
         $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
         $templateParams['title'] = "Home";
         $templateParams['content'] = "vmc/Views/view-posts.php";

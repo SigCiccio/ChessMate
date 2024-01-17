@@ -19,6 +19,8 @@ class Delete
     public function __construct(DatabaseHelper $dbh)
     {
         $this->dbh = $dbh;
+        $this->statement = '';
+        $this->type = '';
     }
 
     public function table(String $table) 
@@ -31,7 +33,7 @@ class Delete
     {
         $this->statement = "WHERE " . $column . " = ? ";
         $this->value[] = $value;
-        $this->type = $type;
+        $this->type = $this->type . $type;
         return $this;
     }
 
@@ -39,7 +41,7 @@ class Delete
     {
         $this->statement = $this->statement . " AND " . $column . " = ? ";
         $this->value[] = $value;
-        $this->type = $type . $type;
+        $this->type = $this->type . $type;
         return $this;
     }
 
@@ -53,7 +55,7 @@ class Delete
 
     public function toString()
     {
-        return $this->table . $this->statement;;
+        return $this->table . $this->statement;
     }
 
 }

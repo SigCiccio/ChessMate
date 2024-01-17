@@ -220,4 +220,35 @@ class UserController
             ->value($followed, 's')
             ->commit();
     }
+
+    public function checkIfUserVote($post)
+    {
+        $res = $this->qb->select('*')
+            ->from('votes')
+            ->where('voter', '=', $_SESSION['user']->getUsername(), 's')
+            ->where('post', '=', $post, 'i')
+            ->commit();
+
+        if(count($res) == 0)
+            return false;
+        return true;
+    }
+
+    public function insertVote($post)
+    {
+        return $this->qb->insert('post, voter')
+            ->into('votes')
+            ->value($post, 'i')
+            ->value($_SESSION['user']->getUsername(), 's')
+            ->commit();
+    }
+
+    public function removeVote($post)
+    {
+        return $this->qb->delete()
+            ->table('votes')
+            ->where('post', $post, 'i')
+            ->andWhere('voter', $_SESSION['user']->getUsername(), 's')
+            ->commit();
+    }
 }

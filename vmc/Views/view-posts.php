@@ -25,8 +25,23 @@
             <div class="option">
                 <a href="index.php?view-post-comment=<?php echo $post->getId() ?>">Commenti</a>
                 <a href="index.php?view-post-game=<?php echo $post->getId() ?>">Visualizza</a>
-                <?php echo $post->getVote() ?>
-                <button>Upvote</button>
+                <span vote-of="<?php echo $post->getId() ?>" class="vote"><?php echo $post->getVote() ?></span>
+                <?php 
+                    $uv;
+                    foreach($templateParams['upvote'] as $up)
+                    {
+                        if($up['post'] == $post->getId())
+                        {
+                            $uv = $up;
+                            break;
+                        }
+                    }
+                ?>
+                <?php if($uv['upvote']): ?>
+                <button class="btn-vote" post-id="<?php echo $post->getId() ?>">Downvote</button>
+                <?php else: ?>
+                <button class="btn-vote" post-id="<?php echo $post->getId() ?>">Upvote</button>
+                <?php endif ?>
             </div>
         </div>
     <?php endforeach ?>
