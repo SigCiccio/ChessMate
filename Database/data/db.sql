@@ -107,7 +107,7 @@ CREATE TABLE `chessmate`.`comments` (
 CREATE TABLE `chessmate`.`notifications` (
 	`id`	 			INT				NOT NULL AUTO_INCREMENT,
   	`user`	 			VARCHAR(150) 	NOT NULL,
-  	`sender`		 	VARCHAR(150) 	NOT NULL,
+  	`author`		 	VARCHAR(150) 	NOT NULL,
   	`date` 				DATE		 	NOT NULL,
 	`time`				TIME			NOT NULL,
 	`post`				INT 			DEFAULT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `chessmate`.`notifications` (
 	FOREIGN KEY (`user`) REFERENCES `users`(`username`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
-  	FOREIGN KEY (`sender`) REFERENCES `users`(`username`)
+  	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
