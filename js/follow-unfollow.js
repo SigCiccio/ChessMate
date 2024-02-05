@@ -2,7 +2,6 @@ $(document).ready(function () {
     $('#unfollow').click(function (e) { 
         e.preventDefault();
         const username = $(`[user-attr=username]`).text();
-        console.log(username)
         $.ajax({
             type: "get",
             url: "follow-unfollow.php",
@@ -23,7 +22,6 @@ $(document).ready(function () {
     $('#follow').click(function (e) { 
         e.preventDefault();
         const username = $(`[user-attr=username]`).text();
-        console.log(username)
         $.ajax({
             type: "get",
             url: "follow-unfollow.php",

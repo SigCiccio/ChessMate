@@ -32,10 +32,11 @@
     <?php if(!isset($templateParams['no-nav'])): ?>
         <nav>
             <ul>
-                <li>Home</li>
-                <li>Cerca</li>
-                <li>Profilo</li>
-                <li>Eventi</li> 
+                <a href="index.php"><li>Home</li></a>
+                <a href="index.php?search-user"><li>Cerca</li></a>
+                <a href="index.php?my_profile"><li>Profilo</li></a>
+                <a href="index.php?notifications"><li <?php if($templateParams['notification-count'] > 0) echo "class='bc-red'"; ?>>Notifiche <?php if($templateParams['notification-count'] > 0) echo $templateParams['notification-count']; ?> </li></a> 
+                <a href="authentication.php"><li>Logout</li></a>
             </ul>
         </nav>
     <?php endif ?>

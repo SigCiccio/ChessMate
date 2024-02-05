@@ -16,7 +16,17 @@
         <form action="modify-profile.php" method="post" enctype="multipart/form-data">
 
             <label for="image">Cambia immagine profilo:</label>
-            <input type="file" name="image" id="image">
+            <input type="file" name="image" id="image" accept="image/*" onchange="loadFile(event)">
+            <img id="output" src="imgs/<?php echo $_SESSION['user']->getImage()->getUrl() ?>">
+            <script>
+                var loadFile = function(event) {
+                  var output = document.getElementById('output');
+                  output.src = URL.createObjectURL(event.target.files[0]);
+                  output.onload = function() {
+                    URL.revokeObjectURL(output.src) 
+                  }
+                };
+            </script>
 
             <label for="mail">Email: </label>
             <input type="email" name="mail" id="mail" value="<?php echo $user->getMail() ?>">

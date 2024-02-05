@@ -3,8 +3,10 @@
 namespace vmc\Models;
 
 require_once("vmc/Models/ImageModel.php");
+require_once("vmc/Models/UserListModel.php");
 
 use vmc\Models\ImageModel;
+use vmc\Models\UserListModel;
 
 class UserModel
 {
@@ -15,12 +17,10 @@ class UserModel
     private String $name;
     private String $surname;
     private $birthday;
-    private int $followers;
-    private int $follow;
-    private $followersList;
-    private $followList;
+    private $followers;
+    private $follow;
 
-    public function __construct(String $username, String $mail, String $bio, String $name, String $surname, $birthday, int $followers, int $follow)  
+    public function __construct(String $username, String $mail, String $bio, String $name, String $surname, $birthday)  
     {
         $this->username = $username;
         $this->mail = $mail;
@@ -28,51 +28,75 @@ class UserModel
         $this->name = $name;
         $this->surname = $surname;
         $this->birthday = $birthday;
-        $this->followers = $followers;
-        $this->follow = $follow;
+        $this->followers = NULL;
+        $this->follow = NULL;
         $this->image = NULL;
-        $this->followersList = NULL;
-        $this->followList = NULL;
     }
 
+    // --- ------------------------------------------------
+    // --- Followers e Follow
+    // --- ------------------------------------------------
+
+    // Setter
+    public function setFollowList(array $list)
+    {
+        $this->follow = new UserListModel($list);
+    }
+
+    public function setFollowersList(array $list)
+    {
+        $this->followers = new UserListModel($list);
+    }
+
+    // Getter
+    public function getFollowersList()
+    {
+        return $this->followers->getList();
+    }
+
+    public function getFollowList()
+    {
+        return $this->follow->getList();
+    }
+
+    public function getFollowers()
+    {
+        return count($this->getFollowersList());
+    }
+
+    public function getFollow()
+    {
+        return count($this->getFollowList());
+    }
+
+    // Altro
     public function removeToFollow($username)
     {
-        $pos = array_search($username, $this->followList);
-
-        if($pos != false)
-        {
-            $this->followList[$pos] = NULL;
-        }
+        return $this->follow->removeUserToList($username);
     }
-
+    
     public function addToFollow($username)
     {
-        $this->followList[] = $username;
+        $this->follow->addUserToList($username);
     }
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
 
     public function hasImage()
     {
         return $this->image != NULL;
-    }
-
-    public function setFollowList(array $followList)
-    {
-        $this->followList = $followList;
-    }
-
-    public function setFollowersList(array $followersList)
-    {
-        $this->followersList = $followersList;
-    }
-
-    public function setFollowersNumber(int $n)
-    {
-        $this->followers = $n;
-    }
-
-    public function setFollowNumber($n)
-    {
-        $this->follow = $n;
     }
 
     public function setImage(ImageModel $image)
@@ -110,16 +134,6 @@ class UserModel
         $this->birthday = $birthday;
     }
 
-    public function getFollowersList()
-    {
-        return $this->followersList;
-    }
-
-    public function getFollowList()
-    {
-        return $this->followList;
-    }
-
     public function getUsername()
     {
         return $this->username;
@@ -143,16 +157,6 @@ class UserModel
     public function getBirthday()
     {
         return $this->birthday;
-    }
-
-    public function getFollowers()
-    {
-        return $this->followers;
-    }
-
-    public function getFollow()
-    {
-        return $this->follow;
     }
 
     public function getImage()

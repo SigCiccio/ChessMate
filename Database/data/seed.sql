@@ -25,3 +25,6 @@ INSERT INTO `votes` (`post`, `voter`) VALUES
 
 INSERT INTO `comments` (`id`, `post`, `author`, `publication_date`, `publication_time`, `text`) VALUES 
     (NULL, '1', 'hikaru', '2024-01-14', '10:20:00', 'Il matto di Legal');
+
+INSERT INTO `notifications` (`id`, `user`, `author`, `date`, `time`, `post`, `comment`, `viewed`) VALUES 
+    (NULL, 'magnus', 'gothamchess', '2024-02-01', '09:20:43', NULL, NULL, '0');

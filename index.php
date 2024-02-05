@@ -4,12 +4,14 @@ require_once("utils/functions.php");
 require_once("utils/bootstrap.php");
 
 require_once("vmc/Controllers/UserController.php"); 
+require_once("vmc/Controllers/NotificationController.php");
 require_once("vmc/Controllers/PostController.php");
 require_once("vmc/Controllers/CommentController.php");
 
 require_once("vmc/Models/UserModel.php"); 
 
 use vmc\Controllers\UserController; 
+use vmc\Controllers\NotificationController; 
 use vmc\Controllers\PostController;
 use vmc\Controllers\CommentController;
 
@@ -17,6 +19,8 @@ use vmc\Models\UserModel;
 
 if(isUserLoggedIn())
 {
+    $nc = new NotificationController($dbh);
+
     if(isset($_GET['my_profile']))
     {
         $pc = new PostController($dbh);
@@ -57,6 +61,8 @@ if(isUserLoggedIn())
         $templateParams['user'] = $uc->selectUserFromUsername($_GET['view-profile']);
         $templateParams['posts'] = $pc->selectPostsByAuthor($templateParams['user']->getUsername());
 
+        $templateParams['is-followed'] = false;
+
         $templateParams['upvote'] = [];
         foreach($templateParams['posts'] as $p)
         {
@@ -70,6 +76,17 @@ if(isUserLoggedIn())
         $templateParams['content'] = "vmc/Views/view-profile.php";
         $templateParams['script'] = '<script src="js/post-preview.js"></script><script src="js/follow-unfollow.js"></script><script src="js/vote.js"></script>';
         $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
+    }
+    else if(isset($_GET['notifications']))
+    {
+        $templateParams['notifications'] = $nc->getNotifications($_SESSION['user']->getUsername()); 
+        foreach($templateParams['notifications'] as $noti)
+            $nc->notificationViewed($noti->getId());
+
+        $templateParams['comment-controller'] = new CommentController($dbh);
+        $templateParams['title'] = 'Notifiche';
+        $templateParams['script'] = '<script src="js/notifications.js"></script>';
+        $templateParams['content'] = "vmc/Views/view-notifications.php";
     }
     else if(isset($_GET['modify-profile']))
     {
@@ -135,6 +152,8 @@ if(isUserLoggedIn())
         $templateParams['title'] = "Home";
         $templateParams['content'] = "vmc/Views/view-posts.php";
     }
+
+    $templateParams['notification-count'] = count($nc->getUnviewedNotification($_SESSION['user']->getUsername()));
 }
 else
 {

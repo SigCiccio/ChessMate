@@ -8,6 +8,7 @@ require_once("utils/functions.php");
 
 require_once('vmc/Models/UserModel.php');
 
+require_once('vmc/Controllers/NotificationController.php');
 require_once('vmc/Controllers/ImageController.php');
 
 use DatabaseHelper;
@@ -15,17 +16,43 @@ use Database\DB\QueryBuilder;
 
 use vmc\Models\UserModel;
 
+use vmc\Controllers\NotificationController;
 use vmc\Controllers\ImageController;
 
 class UserController
 {
     private QueryBuilder $qb;
     private ImageController $ic;
+    private NotificationController $nc;
 
     public function __construct(DatabaseHelper $dbh)  
     {
         $this->qb = new QueryBuilder($dbh);
         $this->ic = new ImageController($dbh);
+        $this->nc = new NotificationController($dbh);
+    }
+
+    private function makeModel(array $data)
+    {
+        $followersList = $this->selectFollowersList($data['username']);
+
+        if(count($followersList) != $data['followers'])
+            $this->updateFollowers(count($followersList), $data['username']);
+        
+        $followList = $this->selectFollowList($data['username']);
+
+            if(count($followList) != $data['follow'])
+                $this->updateFollow(count($followersList), $data['username']);
+
+        $um = new UserModel($data['username'], $data['mail'], $data['bio'], $data['name'], $data['surname'], $data['birthday']);
+
+        $um->setFollowList($followList);
+        $um->setFollowersList($followersList);
+
+        if($data['image'] != NULL)
+            $um->setImage($this->ic->selectImageById($data['image']));
+        
+        return $um;
     }
 
     private function checkData(array $data)
@@ -36,7 +63,7 @@ class UserController
         return true;
     }
 
-    private function selectFollowersList($username)
+    public function selectFollowersList($username)
     {
         $res = $this->qb->select('follower')
             ->from('follows')
@@ -53,7 +80,7 @@ class UserController
         return $list;
     }
 
-    private function selectFollowList($username)
+    public function selectFollowList($username)
     {
         $res = $this->qb->select('followed')
             ->from('follows')
@@ -86,29 +113,6 @@ class UserController
             ->set('follow', $n, 'i')
             ->where('username', $username, 's')
             ->commit();
-    }
-
-    private function makeModel(array $data)
-    {
-        $followersList = $this->selectFollowersList($data['username']);
-
-        if(count($followersList) != $data['followers'])
-            $this->updateFollowers(count($followersList), $data['username']);
-        
-        $followList = $this->selectFollowList($data['username']);
-
-            if(count($followList) != $data['follow'])
-                $this->updateFollow(count($followersList), $data['username']);
-
-        $um = new UserModel($data['username'], $data['mail'], $data['bio'], $data['name'], $data['surname'], $data['birthday'], count($followersList), count($followList));
-
-        $um->setFollowList($followList);
-        $um->setFollowersList($followersList);
-
-        if($data['image'] != NULL)
-            $um->setImage($this->ic->selectImageById($data['image']));
-        
-        return $um;
     }
 
     public function selectUserFromMail(String $mail)
@@ -203,24 +207,6 @@ class UserController
         return $res;
     }
 
-    public function unfollow($follower, $followed)
-    {
-        return $this->qb->delete()
-            ->table('follows')
-            ->where('follower', $follower, 's')
-            ->andWhere('followed', $followed, 's')
-            ->commit();
-    }
-
-    public function follow($follower, $followed)
-    {
-        return $this->qb->insert('follower, followed')
-            ->into('follows')
-            ->value($follower, 's')
-            ->value($followed, 's')
-            ->commit();
-    }
-
     public function checkIfUserVote($post)
     {
         $res = $this->qb->select('*')
@@ -236,6 +222,7 @@ class UserController
 
     public function insertVote($post)
     {
+        $this->nc->makePostNotification($_SESSION['user']->getUsername(), $post);
         return $this->qb->insert('post, voter')
             ->into('votes')
             ->value($post, 'i')
@@ -245,10 +232,31 @@ class UserController
 
     public function removeVote($post)
     {
+        $this->nc->removePostNotification($_SESSION['user']->getUsername(), $post);
         return $this->qb->delete()
             ->table('votes')
             ->where('post', $post, 'i')
             ->andWhere('voter', $_SESSION['user']->getUsername(), 's')
             ->commit();
+    }
+
+    public function unfollow($follower, $followed)
+    {
+        $this->qb->delete()
+            ->table('follows')
+            ->where('follower', $follower, 's')
+            ->andWhere('followed', $followed, 's')
+            ->commit();
+            return $this->nc->removeFollowNotification($followed, $follower);
+    }
+
+    public function follow($follower, $followed)
+    {
+        $this->qb->insert('follower, followed')
+            ->into('follows')
+            ->value($follower, 's')
+            ->value($followed, 's')
+            ->commit();
+            return $this->nc->makeNotification($followed, $follower, NULL, NULL);
     }
 }

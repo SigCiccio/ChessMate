@@ -4,10 +4,15 @@
         <?php if(count($templateParams['users-list']) == 0): ?>
             Nessuno attualmente. 
         <?php else: ?>
-            <?php foreach($templateParams['users-list'] as $ul): ?>
-                <a href="index.php?view-profile=<?php echo $ul ?>">
+            <?php foreach($templateParams['users-list'] as $us): 
+                $ul = $uc->selectUserFromUsername($us);
+                ?>
+                <a href="index.php?view-profile=<?php echo $ul->getUsername() ?>">
                     <div>
-                        <?php echo $ul ?>
+                        <div>
+                            <img src="imgs/<?php echo $ul->getImage()->getUrl() ?>" alt="Immagine profilo di <?php echo $ul->getUsername() ?>">
+                        </div>
+                        <?php echo $ul->getUsername() ?>
                     </div>
                 </a>
             <?php endforeach ?>

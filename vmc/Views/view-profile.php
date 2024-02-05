@@ -1,5 +1,15 @@
 <?php 
     $user = $templateParams['user'];
+
+    $isFollowed = false;
+    foreach($_SESSION['user']->getFollowList() as $f)
+    {
+        if($user->getUsername() == $f)
+        {
+            $isFollowed = true;     
+            break;
+        }
+    }
 ?>
 
 <section class="profile">
@@ -25,7 +35,7 @@
             <a href="index.php?modify-profile">Modifica</a>
             <a href="index.php?upload-game">Carica Partita</a>
         <?php else: ?>
-            <?php if(in_array($user->getUsername(),$_SESSION['user']->getFollowList())): ?>
+            <?php if($isFollowed): ?>
                 <button id="unfollow">Non seguire più</button>
                 <button class='hide' id="follow">Segui</button>
             <?php else: ?>
@@ -42,6 +52,4 @@
     <?php else: ?>
         <?php require('vmc/Views/view-posts.php') ?>
     <?php endif ?>
-
-</section>
 

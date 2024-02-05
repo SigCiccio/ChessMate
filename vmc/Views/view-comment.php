@@ -17,10 +17,13 @@
                 <div class="comment">
                     <div class="data">
                         <?php echo $comment->getAuthor() . " " . $comment->getPublicationDate() . " " . $comment->getPublicationTime() ?>
+                        <?php if($comment->getAuthor() == $_SESSION['user']->getUsername()): ?> 
+                            <button class='my-comment' commentId='<?php echo $comment->getId() ?>'>X</button>
+                        <?php endif ?>  
                     </div>
-                </div>
-                <div class="content">
-                    <?php echo $comment->getText() ?>
+                    <div class="content">
+                        <?php echo $comment->getText() ?>
+                    </div>
                 </div>
             <?php endforeach ?>
         <?php endif ?>

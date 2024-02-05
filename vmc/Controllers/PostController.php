@@ -120,4 +120,14 @@ class PostController
             ->where('id', $id, 'i')
             ->commit();
     }
+
+    public function getPostAuthor($post)
+    {
+        $res = $this->qb->select('author')
+            ->from('posts')
+            ->where('id', '=', $post, 'i')
+            ->commit();
+        return $res[0]['author'];
+    }
+
 }

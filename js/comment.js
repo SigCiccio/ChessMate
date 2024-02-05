@@ -16,7 +16,33 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                $('#comments-list').prepend(`<div class='comment'><div class='data'>${response.author} ${response.publication_date} ${response.publication_time}</div></div> <div class='content'>${response.text}</div></div> `);
+                $('#comments-list').prepend(` \
+                <div class='comment'> \
+                    <div class='data'> \
+                        ${response.author} ${response.publication_date} ${response.publication_time}  \
+                        <button class='my-comment' commentId='${response.id}'>X</button> \
+                    </div> \
+                    <div class='content'> \
+                        ${response.text} \
+                    </div> \ 
+                </div> \
+                `); 
+            }
+        });
+    });
+
+    $(document).on('click', '.my-comment', function (e) { 
+        e.preventDefault();
+        const comment = $(this).attr('commentId');
+        $.ajax({
+            type: "POST",
+            url: "new-comment.php?remove",
+            data: {
+                comment
+            },
+            dataType: "text",
+            success: function () {
+                $(`[commentId=${comment}]`).parent().parent().remove();
             }
         });
     });

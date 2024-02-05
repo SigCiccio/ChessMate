@@ -17,35 +17,19 @@ if(isUserLoggedIn())
 
     if($_GET['action'] == 'unfollow')
     {
-
-        $found = NULL;
-
-        foreach($_SESSION['user']->getFollowList() as $f)
+        $data['followed'] = $followed;
+        $data['follower'] = $follower;
+        $data['res'] = $_SESSION['user']->removeToFollow($followed);
+        if($data != -1)
         {
-            if($f == $followed)
-            {
-                $found = $f;
-                break;
-            }
-        }
-        if($found != NULL)
-        {
-            $_SESSION['user']->removeToFollow($followed);
-            $_SESSION['user']->setFollowNumber($_SESSION['user']->getFollow() - 1);
+            $data['unfollow'] = true;
             $uc->unfollow($follower, $followed);
-            $data = ['res' => 'success'];
-        }
-        else 
-        {
-            $data = ['res' => $followed . ' not found'];
         }
     }
     else 
     {
-        $_SESSION['user']->setFollowNumber($_SESSION['user']->getFollow() + 1);
         $_SESSION['user']->addToFollow($followed);
-        $uc->follow($follower, $followed);   
-        $data = ['res' => 'success']; 
+        $data = $uc->follow($follower, $followed);   
     }
 
     echo json_encode($data);
