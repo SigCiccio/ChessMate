@@ -18,64 +18,20 @@ CREATE TABLE `chessmate`.`images` (
 -- Table `chessmate`.`users`
 -- -----------------------------------------------------
 CREATE TABLE `chessmate`.`users` (
-  	`mail` 			VARCHAR(200)	UNIQUE,
   	`username` 		VARCHAR(150) 	NOT NULL,
+  	`mail` 			VARCHAR(200)	UNIQUE,
   	`password` 		VARCHAR(512) 	NOT NULL,
+  	`bio`	 		VARCHAR(512) 	DEFAULT "",
   	`image` 		INT			 	DEFAULT NULL,
   	`name` 			VARCHAR(45) 	NOT NULL,
   	`surname` 		VARCHAR(45) 	NOT NULL,
-  	`birtday` 		DATE		 	NOT NULL,
-  	`nazionality`	VARCHAR(150)	DEFAULT NULL,
-  	`elo`			INT				DEFAULT NULL,
+  	`birthday` 		DATE		 	NOT NULL,
   	`followers`		INT				NOT NULL DEFAULT 0,
   	`follow`		INT				NOT NULL DEFAULT 0,
   	PRIMARY KEY (`username`),
 	FOREIGN KEY (`image`) REFERENCES `images`(`id`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE
-);
-
--- -----------------------------------------------------
--- Table `chessmate`.`posts`
--- -----------------------------------------------------
-CREATE TABLE `chessmate`.`posts` (
-  	`id`	 			INT				NOT NULL AUTO_INCREMENT,
-  	`author` 			VARCHAR(150) 	UNIQUE,
-  	`publication_date` 	DATE		 	NOT NULL,
-  	`title`			 	VARCHAR(512) 	NOT NULL,
-  	`text`			 	VARCHAR(512) 	NOT NULL,
-  	`vote`			 	INT			 	DEFAULT NULL,
-  	`image` 			INT			 	DEFAULT NULL,
-  	PRIMARY KEY (`id`),
-  	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	FOREIGN KEY (`image`) REFERENCES `images`(`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-);
-
--- -----------------------------------------------------
--- Table `chessmate`.`discussions`
--- -----------------------------------------------------
-CREATE TABLE `chessmate`.`discussions` (
-	`id`	 			INT				NOT NULL AUTO_INCREMENT,
-  	`post`	 			INT				NOT NULL,
-  	`replay_to`			INT				DEFAULT NULL,
-  	`author`		 	VARCHAR(150) 	NOT NULL,
-  	`publication_date` 	DATE		 	NOT NULL,
-  	`text`			 	VARCHAR(512) 	NOT NULL,
-  	`vote`			 	INT			 	DEFAULT NULL,
-  	PRIMARY KEY (`id`),
-  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	FOREIGN KEY (`replay_to`) REFERENCES `discussions`(`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
+		ON DELETE SET NULL
 );
 
 -- -----------------------------------------------------
@@ -93,3 +49,81 @@ CREATE TABLE `chessmate`.`follows` (
 		ON DELETE CASCADE
 );
 
+-- -----------------------------------------------------
+-- Table `chessmate`.`posts`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`posts` (
+  	`id`	 			INT				NOT NULL AUTO_INCREMENT,
+  	`author` 			VARCHAR(150) 	NOT NULL,
+  	`publication_date` 	DATE		 	NOT NULL,
+	`publication_time`	TIME			NOT NULL,
+  	`title`			 	VARCHAR(512) 	NOT NULL,
+	`game`				VARCHAR(1024) 	NOT NULL,
+  	`vote`			 	INT			 	DEFAULT 0,
+  	PRIMARY KEY (`id`),
+  	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Table `chessmate`.`votes`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`votes` (
+  	`post`	 	INT	NOT NULL,
+  	`voter`		VARCHAR(150) 	NOT NULL,
+  	PRIMARY KEY (`post`, `voter`),
+  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`voter`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Table `chessmate`.`comments`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`comments` (
+	`id`	 			INT				NOT NULL AUTO_INCREMENT,
+  	`post`	 			INT				NOT NULL,
+  	`author`		 	VARCHAR(150) 	NOT NULL,
+  	`publication_date` 	DATE		 	NOT NULL,
+	`publication_time`	TIME			NOT NULL,
+	`text`				VARCHAR(1024)	NOT NULL,
+  	PRIMARY KEY (`id`),
+  	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+
+-- -----------------------------------------------------
+-- Table `chessmate`.`notifications`
+-- -----------------------------------------------------
+CREATE TABLE `chessmate`.`notifications` (
+	`id`	 			INT				NOT NULL AUTO_INCREMENT,
+  	`user`	 			VARCHAR(150) 	NOT NULL,
+  	`author`		 	VARCHAR(150) 	NOT NULL,
+  	`date` 				DATE		 	NOT NULL,
+	`time`				TIME			NOT NULL,
+	`post`				INT 			DEFAULT NULL,
+	`comment`			INT 			DEFAULT NULL,
+	`viewed`			INT				DEFAULT 0,
+  	PRIMARY KEY (`id`),
+	FOREIGN KEY (`user`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+  	FOREIGN KEY (`author`) REFERENCES `users`(`username`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`post`) REFERENCES `posts`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (`comment`) REFERENCES `comments`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);

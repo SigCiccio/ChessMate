@@ -96,6 +96,15 @@ class Select
         return $this;
     }
 
+    public function isNull($field)
+    {
+        if($this->where == [])
+            $this->where[] = " WHERE ${field} IS NULL ";
+        else 
+            $this->where[] = " AND ${field} IS NULL ";
+        return $this;
+    }
+
     public function orWhere($field, $confronter, $value, $type)
     {
         if($this->where == [])

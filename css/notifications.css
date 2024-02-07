@@ -1,0 +1,25 @@
+.notifications{
+    text-align: center;
+}
+
+.notification{
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: white;
+}
+
+.notification a{
+    display: inline-block;
+    width: 80%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+button {
+    float: right;
+    font-weight: bold;
+    border: 1px solid;
+    border-radius: 10px;
+}

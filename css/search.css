@@ -1,0 +1,54 @@
+form{
+    text-align: center;
+}
+
+label{
+    font-weight: bold;
+}
+
+input{
+    height: 25px;
+    border-radius: 10px;
+}
+
+button{
+    border-radius: 10px;
+    border: solid;
+    background-color: green;
+    padding: 5px;
+}
+
+button i {
+    font-size: 16px;
+}
+
+.result a, #followers-follow-list a {
+    text-decoration: none;
+}
+
+div.img{
+    margin-right: 20px;
+}
+
+div.img, div.img img{
+    width: 125px;
+}
+
+div.user{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    margin: 10px 0;
+    align-items: center;
+}
+
+.user{
+    font-size: 1.25rem;
+}
+
+.username{
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}

@@ -1,0 +1,50 @@
+main{
+    text-align: center;
+}
+
+div.login, div.signin{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+label{
+    flex:30%;
+    margin-bottom: 10px;
+}
+
+input{
+    
+    border-radius: 10px;
+    height: 25px;
+    flex: 65%;
+    margin-bottom: 10px;
+}
+
+input#submit{
+    margin: 20px 25%;
+    margin-left: 25.5%;
+    width: 55%;
+    height: 40px;
+    background-color: green;
+    border-radius: 20px;
+}
+
+div.hide{
+    display: none;
+}
+
+div.error{
+    margin: 30px 15%;
+    border: 2px solid red;
+    padding: 20px;
+    color: red;
+}
+
+input#sign{
+    vertical-align: middle;
+    margin-right: 10px;
+    margin: 0;
+    padding: 0;
+}

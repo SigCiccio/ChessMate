@@ -1,0 +1,33 @@
+label{
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label:first-child {
+    text-align: center;
+    display: inline-block;
+    width: 40%;
+}
+input{
+    display: inline-block;
+    width: 55%;
+}
+
+textarea{
+    margin-left: 5%;
+    width: 90%;
+    height: 300px;
+}
+
+input[type= 'submit']{
+    text-align: center;
+    margin-left: 25%;
+    margin-top: 40px;
+    color: white;
+    padding: 10px 0;
+    background-color: green;
+    border: none;
+    border-radius: 10px;
+
+}
