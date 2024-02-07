@@ -19,7 +19,7 @@ if(!isUserLoggedIn())
         else 
         {
             $um = $uc->selectUserFromUsername($_POST['username']);
-            if($um['res'] != -1)
+            if(!isset($um['res']) || $um['res'] != [])
                 header("Location: index.php?sign-error=username");
             else 
             {
@@ -32,8 +32,6 @@ if(!isUserLoggedIn())
                         'name'          => $_POST['name'],
                         'surname'       => $_POST['surname'],
                         'birthday'       => $_POST['birthday'],
-                        'nationality'   => $_POST['nationality'],
-                        'elo'           => $_POST['elo'],
                     ];
                     $uc->insertNewUser($data);
 
@@ -51,7 +49,7 @@ if(!isUserLoggedIn())
     {
         $um = $uc->selectUserFromMail($_POST['mail']);
 
-        if($um['res'] == -1)
+        if(!isset($um['res']) || $um['res'] == -1)
             header("Location: index.php?error=mail");
         else 
         {
@@ -67,8 +65,6 @@ if(!isUserLoggedIn())
             }
         }
     }
-    
-
     
 }
 else 

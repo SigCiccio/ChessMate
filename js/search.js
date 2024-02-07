@@ -14,7 +14,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('.result').empty();
                 response.forEach(element => {
-                    const html = `<a href="index.php?view-profile=${element.username}"><div width="500px" class="user"> <div class="img"> <img width="100px" src="imgs/${element.url}" alt="immagine profilo di ${element.username}"></div>${element.username}</div></a>`
+                    const html = `<a href="index.php?view-profile=${element.username}"><div class="user"> <div class="img"> <img src="imgs/${element.url}" alt="immagine profilo di ${element.username}"></div><div class='username'>${element.username}</div></div></a>`
                     $('.result').append(html);
                 });
                 

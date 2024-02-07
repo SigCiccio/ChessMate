@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('.noti').on('click', function (e) {
         e.preventDefault();
         
-        const notification = $(this).attr('notiId');
+        const notification = $(this).attr('data-notiId');
         console.log(notification);
 
         $.ajax({
@@ -17,7 +17,7 @@ $(document).ready(function () {
             dataType: "text",
             success: function (response) {
                 console.log(response);
-                $(`[divNotiId="${notification}"]`).addClass('hide');
+                $(`[data-divNotiId="${notification}"]`).remove();
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) { 
                 alert("Status: " + textStatus); alert("Error: " + errorThrown); 

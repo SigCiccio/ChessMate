@@ -147,6 +147,14 @@ class UserController
         return $this->makeModel($res[0]);
     }
 
+    public function updatePassword($user, $password)
+    {
+        return $this->qb->update()->table('users')
+            ->set('password', $password, 's')
+            ->where('username', $user, 's')
+            ->commit();
+    }
+
     public function checkPassword(String $username, $password)
     {
         $res = $this->qb->select('password')

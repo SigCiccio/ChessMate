@@ -41,7 +41,7 @@ if(isUserLoggedIn())
         $templateParams['title'] = "Il Mio Profilo";
         $templateParams['content'] = "vmc/Views/view-profile.php";
         $templateParams['script'] = '<script src="js/post-preview.js"></script><script src="js/vote.js"></script>';
-        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css"><link rel="stylesheet" href="css/home.css"><link rel="stylesheet" href="css/profile.css">';
     }
     else if(isset($_GET['view-post-game']))
     {
@@ -49,12 +49,15 @@ if(isUserLoggedIn())
         
         $templateParams['title'] = "Partita";
         $templateParams['content'] = "vmc/Views/view-game.php";
-        $templateParams['script'] = '<script src="js/chessboard.js"></script>';
+        $templateParams['script'] = '<script src="js/pieces.js"></script><script src="js/chessboard.js"></script>';
         $templateParams['post'] = $pc->selectPostById($_GET['view-post-game']);
-        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css"><link rel="stylesheet" href="css/game.css">';
     }
     else if(isset($_GET['view-profile']))
     {
+        if($_GET['view-profile'] == $_SESSION['user']->getUsername())
+            header("Location: index.php?my_profile");
+
         $uc = new UserController($dbh);
         $pc = new PostController($dbh);
 
@@ -75,7 +78,7 @@ if(isUserLoggedIn())
         $templateParams['title'] = $templateParams['user']->getUsername();
         $templateParams['content'] = "vmc/Views/view-profile.php";
         $templateParams['script'] = '<script src="js/post-preview.js"></script><script src="js/follow-unfollow.js"></script><script src="js/vote.js"></script>';
-        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css"><link rel="stylesheet" href="css/home.css"><link rel="stylesheet" href="css/profile.css">';
     }
     else if(isset($_GET['notifications']))
     {
@@ -87,12 +90,14 @@ if(isUserLoggedIn())
         $templateParams['title'] = 'Notifiche';
         $templateParams['script'] = '<script src="js/notifications.js"></script>';
         $templateParams['content'] = "vmc/Views/view-notifications.php";
+        $templateParams['style'] = '<link rel="stylesheet" href="css/notifications.css">';
     }
     else if(isset($_GET['modify-profile']))
     {
         $templateParams['title'] = 'Modifica Profilo';
         
         $templateParams['content'] = "vmc/Views/modify-profile.php";
+        $templateParams['style'] = '<link rel="stylesheet" href="css/modify-profile.css">';
     }
     else if(isset($_GET['view-post-comment']))
     {
@@ -103,16 +108,19 @@ if(isUserLoggedIn())
         $templateParams['title'] = 'Commenti';
         $templateParams['script'] = '<script src="js/comment.js"></script>';
         $templateParams['content'] = "vmc/Views/view-comment.php";
+        $templateParams['style'] = '<link rel="stylesheet" href="css/comments.css">';
     }
     else if(isset($_GET['upload-game']))
     {
         $templateParams['title'] = "Nuovo post";
         $templateParams['content'] = "vmc/Views/upload-post.php";
+        $templateParams['style'] = '<link rel="stylesheet" href="css/add-game.css">';
     }
     else if(isset($_GET['search-user']))
     {
         $templateParams['title'] = "Nuovo post";
         $templateParams['script'] = '<script src="js/search.js"></script>';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/search.css">';
         $templateParams['content'] = "vmc/Views/search-user.php";
     }
     else if(isset($_GET['follow']))
@@ -122,6 +130,7 @@ if(isUserLoggedIn())
         $templateParams['user'] = $uc->selectUserFromUsername($_GET['follow']);
         $templateParams['users-list'] = $templateParams['user']->getFollowList();
         $templateParams['title'] = "Follow";
+        $templateParams['style'] = '<link rel="stylesheet" href="css/search.css">';
         $templateParams['content'] = "vmc/Views/followers-follow.php";
     }
     else if(isset($_GET['followers']))
@@ -130,8 +139,16 @@ if(isUserLoggedIn())
         
         $templateParams['user'] = $uc->selectUserFromUsername($_GET['followers']);
         $templateParams['users-list'] = $templateParams['user']->getFollowersList();
+        $templateParams['style'] = '<link rel="stylesheet" href="css/search.css">';
         $templateParams['title'] = "Followers";
         $templateParams['content'] = "vmc/Views/followers-follow.php";
+    }
+    else if(isset($_GET['modify-password']))
+    {
+        $templateParams['title'] = 'Modifica Profilo';
+        
+        $templateParams['content'] = "vmc/Views/modify-password.php";
+        $templateParams['style'] = '<link rel="stylesheet" href="css/modify-profile.css">';
     }
     else 
     {
@@ -148,7 +165,7 @@ if(isUserLoggedIn())
             ];
         }
         $templateParams['script'] = '<script src="js/vote.js"></script><script src="js/post-preview.js"></script>';
-        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css">';
+        $templateParams['style'] = '<link rel="stylesheet" href="css/chessboard.css"><link rel="stylesheet" href="css/home.css">';
         $templateParams['title'] = "Home";
         $templateParams['content'] = "vmc/Views/view-posts.php";
     }
@@ -159,6 +176,7 @@ else
 {
     $templateParams['no-nav'] = true;
     $templateParams['script'] = '<script src="js/log-sign.js"></script>';
+    $templateParams['style'] = '<link rel="stylesheet" href="css/login.css">';
     $templateParams['title'] = "Login";
     $templateParams['content'] = "vmc/Views/log-sign.php";
 }

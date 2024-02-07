@@ -1,0 +1,53 @@
+h2{
+    display: inline;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+section.game a{
+    float: right;
+    font-size: 24px;
+    color: white;
+    margin-right: 20px;
+}
+
+.conteiner{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#gamecontrollers{
+    text-align: center;
+}
+
+#gamecontrollers button{
+    font-size: 30px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+#moves{
+    font-weight: bold;
+    margin-left: 10%;
+    width: 80%;
+    background-color: rgb(1, 65, 1);
+}
+
+#moves > ul > li > ul{
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+#moves > ul > li > ul > li {
+    text-align: left;
+    display: inline-block;  
+    width: 50px; 
+    margin-left: 20px; 
+    margin-bottom: 20px;
+}

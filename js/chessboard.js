@@ -40,7 +40,7 @@ $( document ).ready(function() {
     function fillBoard(position){
 
         let count = 0
-        for(i = 0; i < position.length; i++){
+        for(let i = 0; i < position.length; i++){
 
             switch(checkIfNumber(position.charAt(i))){
                 
@@ -132,7 +132,7 @@ $( document ).ready(function() {
         isntLast = true;
         for(move = 1; isntLast; move++)
         {
-            if($(`[pos=${move}]`).length > 0){
+            if($(`[data-pos=${move}]`).length > 0){
                 isntLast = true
             }
             else
@@ -144,37 +144,37 @@ $( document ).ready(function() {
 
     createBoard()
 
-    const pos = $("[pos=0]").attr("board");
+    const pos = $("[data-pos=0]").attr("data-board");
     fillBoard(pos)
 
     $("#next").click(function(e){
-        if(Number($(this).attr('trace')) > findLastMove()){
+        if(Number($(this).attr('data-trace')) > findLastMove()){
             console.log('cant go')
         }
         else {
             clearBoard()
             createBoard()
             e.preventDefault();
-            const newPos = $(`[pos=${$(this).attr('trace')}]`).attr("board");
+            const newPos = $(`[data-pos=${$(this).attr('data-trace')}]`).attr("data-board");
             fillBoard(newPos)
-            $(this).attr('trace', Number($(this).attr('trace')) + 1);
-            $('#prev').attr('trace', Number($(this).attr('trace')) - 2);
+            $(this).attr('data-trace', Number($(this).attr('data-trace')) + 1);
+            $('#prev').attr('data-trace', Number($(this).attr('data-trace')) - 2);
         }
         
     }); 
 
     $("#prev").click(function(e){
-        if(Number($(this).attr('trace')) < 0){
+        if(Number($(this).attr('data-trace')) < 0){
             console.log('cant go')
         }
         else{
             clearBoard()
             createBoard()
             e.preventDefault();
-            const newPos = $(`[pos=${$(this).attr('trace')}]`).attr("board");
+            const newPos = $(`[data-pos=${$(this).attr('data-trace')}]`).attr("data-board");
             fillBoard(newPos)
-            $(this).attr('trace', Number($(this).attr('trace')) - 1);
-            $('#next').attr('trace', Number($(this).attr('trace')) + 2);
+            $(this).attr('data-trace', Number($(this).attr('data-trace')) - 1);
+            $('#next').attr('data-trace', Number($(this).attr('data-trace')) + 2);
         }
     }); 
 

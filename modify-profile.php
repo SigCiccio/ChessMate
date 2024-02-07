@@ -14,8 +14,19 @@ if(isUserLoggedIn())
     $user = $_SESSION['user'];
     $data = [];
 
+    if(!isset($_FILE['image'])){
+        header("Location: index.php?modify-profile&error");
+    }
+
+    if(isset($_FILES['image']) && $_FILE['image'] != NULL){
+        $ic = new ImageController($dbh);
+        $user->setImage($ic->newImage($_FILES['image']));
+        $data[] = ['image', $user->getImage()->getId(), 'i'];
+    } 
+
     if($_POST['mail'] != $user->getMail())
     {
+        echo $_POST['mail'];
         $data[] = ['mail', $_POST['mail'], 's'];
         $user->setMail($_POST['mail']);
     }
@@ -39,12 +50,6 @@ if(isUserLoggedIn())
         $data[] = ['bio', $_POST['bio'], 's'];
         $user->setBio($_POST['bio']);
     }
-    
-    if(isset($_FILES['image'])){
-        $ic = new ImageController($dbh);
-        $user->setImage($ic->newImage($_FILES['image']));
-        $data[] = ['image', $user->getImage()->getId(), 'i'];
-    } 
 
 
     if(count($data) == 0)

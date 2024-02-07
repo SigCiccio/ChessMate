@@ -3,8 +3,8 @@ $(document).ready(function () {
     $('#submit').click(function (e) { 
         e.preventDefault();
         const comment = $('input#new-comment').val();
-        const username = $('input#new-comment').attr('user');
-        const post = $('input#new-comment').attr('post');
+        const username = $('input#new-comment').attr('data-user');
+        const post = $('input#new-comment').attr('data-post');
         $('input#new-comment').val("");
         $.ajax({
             type: "POST",
@@ -16,11 +16,12 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
+                $('.no-comment').addClass('hide');
                 $('#comments-list').prepend(` \
                 <div class='comment'> \
                     <div class='data'> \
-                        ${response.author} ${response.publication_date} ${response.publication_time}  \
-                        <button class='my-comment' commentId='${response.id}'>X</button> \
+                        <a href="index.php?view-profile=${response.author}">${response.author}</a> ${response.publication_date} ${response.publication_time}  \
+                        <button class='my-comment' data-commentId='${response.id}'>X</button> \
                     </div> \
                     <div class='content'> \
                         ${response.text} \
@@ -33,7 +34,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.my-comment', function (e) { 
         e.preventDefault();
-        const comment = $(this).attr('commentId');
+        const comment = $(this).attr('data-commentId');
         $.ajax({
             type: "POST",
             url: "new-comment.php?remove",
@@ -42,7 +43,7 @@ $(document).ready(function () {
             },
             dataType: "text",
             success: function () {
-                $(`[commentId=${comment}]`).parent().parent().remove();
+                $(`[data-commentId=${comment}]`).parent().parent().remove();
             }
         });
     });

@@ -2,9 +2,9 @@
     $user = $_SESSION['user'];
 ?>
 
-<section class="modify-profile">
+<div class="modify-profile">
 
-    <section class="data">
+    <div class="data">
         <!-- <div class="image">
             <?php if($user->hasImage()): ?>
                 <img width="300px" src="imgs/<?php echo $user->getImage()->getUrl() ?>" alt="Immagine profilo di <?php echo $user->getUsername() ?>">
@@ -13,11 +13,17 @@
             <?php endif ?>
         </div> -->
 
+        <?php if(isset($_GET['error'])): ?>
+            <div class='error'>
+                Errore!
+            </div>
+        <?php endif ?>
         <form action="modify-profile.php" method="post" enctype="multipart/form-data">
-
-            <label for="image">Cambia immagine profilo:</label>
-            <input type="file" name="image" id="image" accept="image/*" onchange="loadFile(event)">
-            <img id="output" src="imgs/<?php echo $_SESSION['user']->getImage()->getUrl() ?>">
+            <div class="img-c">
+                <label for="image">Cambia immagine profilo:</label>
+                <input type="file" name="image" id="image" accept="image/*" onchange="loadFile(event)">
+                <img id="output" src="imgs/<?php echo $_SESSION['user']->getImage()->getUrl() ?>" alt="Immagine profilo di <?php echo $_SESSION['user']->getUsername() ?>">
+            </div>
             <script>
                 var loadFile = function(event) {
                   var output = document.getElementById('output');
@@ -40,10 +46,16 @@
             <label for="bio">Bio: </label>
             <input type="text" name="bio" id="bio" value="<?php echo $user->getBio() ?>">
 
-            <input type="submit" value="Modifica">
+            
+
+            <div class="sub">
+                <input type="submit" value="Modifica">
+            </div>
 
         </form>
-    </section>
-
-</section>
+        <div class='passwd'>
+            <a href="index.php?modify-password">Cambia password</a>
+        </div>
+    </div>
+</div>
 

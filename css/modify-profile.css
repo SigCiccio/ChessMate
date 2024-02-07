@@ -1,0 +1,72 @@
+label, input{
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 20%;
+    height: 25px;
+}
+
+label{
+    margin-left: 20%;   
+}
+
+input{
+    width: 40%;
+}
+
+img{
+    display: inline-block;
+    margin-left: 15%;
+    margin-right: 13%;
+    width: 70%;
+    text-align: center;
+}
+
+.sub{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.sub input{
+    background-color: green;
+    border-radius: 10px;
+}
+
+.img-c{
+    text-align: center;
+}
+
+.img-c label{
+    width: 225px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.img-c input{
+    width: 225px;
+    text-align: center;
+    margin: auto;
+    display: block;
+    margin-bottom: 20px;
+}
+
+div.error{
+    text-align: center;
+    margin: 30px 15%;
+    border: 2px solid red;
+    padding: 20px;
+    color: red;
+}
+
+.passwd{
+    text-align: center;
+
+}
+
+.passwd a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}

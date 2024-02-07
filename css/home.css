@@ -1,0 +1,105 @@
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.posts{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+}
+
+.post{
+    max-height: 430px;
+    margin-right: 20px;
+    margin-left: 20px;
+    width: 320px;
+    background-color: white;
+    color: black;
+    margin-bottom: 40px;
+    border-radius: 0 0 10px 10px;
+}
+
+.post:last-child{
+    margin-bottom: 140px;
+}
+
+.post-data{
+    margin: 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: right;
+    align-items: center;
+}
+/* 
+.post-data span:first-child{
+    text-align: left;
+    font-weight: bold;
+    margin-left: 10px;
+}
+*/
+
+.post-data span:last-child{
+    margin-right: 5px;
+} 
+
+.post-data span{
+    flex: 30%;
+}
+
+.post-data span:first-child{
+    text-align: left;
+    margin-left: 10px;
+}
+
+.title{
+    margin: 10px;
+    margin-top: 5px;
+    color: black;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.option{
+    display: inline-block;
+    width: 100%;
+}
+
+.option a{
+    margin: 0 5px;
+    text-align: left;
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+}
+
+.btn-updown{
+    font-weight: bold;
+    float: right;
+    margin-right: 10px;
+}
+
+.btn-vote{
+    border-radius: 10px;
+    border: solid;
+}
+
+.green{
+    background-color: rgb(6, 163, 6);
+}
+
+.red{
+    background-color: red;
+}
+
+.date, .time{
+    font-size: .75rem;
+    float: right;
+}

@@ -19,7 +19,7 @@ if(isUserLoggedIn())
     {
         $data['followed'] = $followed;
         $data['follower'] = $follower;
-        $data['res'] = $_SESSION['user']->removeToFollow($followed);
+        $data['remove-to-follow'] = $_SESSION['user']->removeToFollow($followed);
         if($data != -1)
         {
             $data['unfollow'] = true;
@@ -29,7 +29,7 @@ if(isUserLoggedIn())
     else 
     {
         $_SESSION['user']->addToFollow($followed);
-        $data = $uc->follow($follower, $followed);   
+        $data = $uc->follow($follower, $followed);
     }
 
     echo json_encode($data);

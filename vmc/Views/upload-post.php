@@ -4,7 +4,7 @@
         <input type="text" name="title" id="title">
 
         <label for="game">Partita: </label>
-        <input type="text" name="game" id="game">
+        <textarea name="game" id="game"></textarea>
 
         <input type="submit" value="Carica">
     </form>

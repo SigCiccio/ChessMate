@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#unfollow').click(function (e) { 
         e.preventDefault();
-        const username = $(`[user-attr=username]`).text();
+        const username = $('#username').children().text();
         $.ajax({
             type: "get",
             url: "follow-unfollow.php",
@@ -10,9 +10,10 @@ $(document).ready(function () {
                 'action': 'unfollow',
             },
             success: function (data) {
+                console.log(username)
                 console.log(data)
-                const num = Number($('[user-attr=followers]').html());
-                $('[user-attr=followers]').html(num - 1);
+                const num = Number($('[data-user=followers]').html());
+                $('[data-user=followers]').html(num - 1);
                 $('#unfollow').addClass('hide');
                 $('#follow').removeClass('hide');                
             }
@@ -21,7 +22,7 @@ $(document).ready(function () {
 
     $('#follow').click(function (e) { 
         e.preventDefault();
-        const username = $(`[user-attr=username]`).text();
+        const username = $(`#username`).children().text();
         $.ajax({
             type: "get",
             url: "follow-unfollow.php",
@@ -31,8 +32,8 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data)
-                const num = Number($('[user-attr=followers]').html());
-                $('[user-attr=followers]').html(num + 1);
+                const num = Number($('[data-user=followers]').html());
+                $('[data-user=followers]').html(num + 1);
                 $('#unfollow').removeClass('hide');
                 $('#follow').addClass('hide');                
             }

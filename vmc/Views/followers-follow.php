@@ -8,11 +8,11 @@
                 $ul = $uc->selectUserFromUsername($us);
                 ?>
                 <a href="index.php?view-profile=<?php echo $ul->getUsername() ?>">
-                    <div>
-                        <div>
+                    <div class='user'>
+                        <div class='img'>
                             <img src="imgs/<?php echo $ul->getImage()->getUrl() ?>" alt="Immagine profilo di <?php echo $ul->getUsername() ?>">
                         </div>
-                        <?php echo $ul->getUsername() ?>
+                        <div class="username"><?php echo $ul->getUsername() ?></div>
                     </div>
                 </a>
             <?php endforeach ?>

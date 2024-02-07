@@ -685,7 +685,7 @@ class Game
             {
                 $board = $this->modifyBoard($player, $m, $board);
 
-                echo "<li pos='" . $count . "' board='" . rtrim($this->reassembleBoard($board), '/') . "'>" . $m . "</li>";
+                echo "<li data-pos='" . $count . "' data-board='" . rtrim($this->reassembleBoard($board), '/') . "'>" . $m . "</li>";
                 
                 $player = 'b';
                 $count++;

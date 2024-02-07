@@ -126,7 +126,7 @@ $( document ).ready(function() {
 
         createBoard($(this));
 
-        const position = $(this).attr('position');
+        const position = $(this).attr('data-position');
 
         fillBoard(position, index);
 

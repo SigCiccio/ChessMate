@@ -61,7 +61,7 @@ class ImageController
             }
             else
             {
-                $em = "You can't upload files of this type";
+                $em = "Non puoi inserire un file di questo tipo! Formati cnsentiti: jpg, jpeg, png";
                 echo $img_ex_lc;
                 /* header("Location: index.php?error=$em"); */
             }
@@ -69,7 +69,7 @@ class ImageController
         else 
         {
             echo $error;
-            $em = "unknown error occurred!";
+            $em = "errore";
             /* header("Location: index.php?error=$em"); */
         }
     }

@@ -1,4 +1,5 @@
 <section class="authentication">
+    <h2>Accedi</h2>
 
     <form action="authentication.php" method="post">
         <?php if(isset($_GET['error'])): ?>    
@@ -8,6 +9,10 @@
                 <?php elseif($_GET['error'] == 'password'): ?>
                     Password non corretta
                 <?php endif; ?>
+            </div>
+        <?php elseif(isset($_GET['sign-error'])): ?>
+            <div class="error">
+                Errore: campi inseriti non validi
             </div>
         <?php endif; ?>
         <div class="login">
@@ -31,17 +36,11 @@
             <label for="name">Nome</label>
             <input type="text" name="name" id="name">
 
-            <label for="new-mail">Cognome</label>
+            <label for="surname">Cognome</label>
             <input type="text" name="surname" id="surname">
 
             <label for="birthday">Data di nascita</label>
             <input type="date" name="birthday" id="birthday">
-
-            <label for="nationality">Nazionalità</label>
-            <input type="text" name="nationality" id="nationality">
-
-            <label for="elo">Mail</label>
-            <input type="number" name="elo" id="elo">
         </div>
 
         <input type="submit" id="submit" value="Accedi">
