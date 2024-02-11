@@ -64,11 +64,23 @@ class PostController
         return $this->makeModel($res[0]);
     }
 
-    public function getMostRecentPost()
+    public function getMostRecentPost($userLsit)
     {
-        $res = $this->qb->select('*')
-            ->from('posts p')
-            ->orderBy('p.publication_date DESC')
+        $count = 0;
+        $query = $this->qb->select('*')
+            ->from('posts p');
+
+        foreach($userLsit as $user){
+            if($count == 0)
+            {
+                $count++;
+                $query->where("p.author", '=', $user, 's');
+            }
+            else 
+                $query->orWhere("p.author", '=', $user, 's');
+        }
+
+        $res = $query->orderBy('p.publication_time DESC, p.publication_date DESC')
             ->commit();
         
         if(count($res) == 0)
@@ -87,7 +99,7 @@ class PostController
         $res = $this->qb->select('*')
             ->from('posts p')
             ->where('author', '=', $author, 's')
-            ->orderBy('p.publication_date DESC')
+            ->orderBy('p.publication_time DESC, p.publication_date DESC ')
             ->commit();
         
         if(count($res) == 0)

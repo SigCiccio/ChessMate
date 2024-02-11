@@ -155,7 +155,7 @@ if(isUserLoggedIn())
         $uc = new UserController($dbh);
         $pc = new PostController($dbh);
         
-        $templateParams['posts'] = $pc->getMostRecentPost();
+        $templateParams['posts'] = $pc->getMostRecentPost($_SESSION['user']->getFollowList());
         $templateParams['upvote'] = [];
         foreach($templateParams['posts'] as $p)
         {
